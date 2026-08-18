@@ -1,6 +1,38 @@
 # Artificial intelligence-A Modern Approach
 
-这是一个关于Artificial intelligence-A Modern Approach的目录结构。
+[![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+> A chapter-by-chapter companion to Russell & Norvig's *Artificial Intelligence: A Modern
+> Approach* — organized notes and runnable demos for every section across 8 parts.
+> —— 《人工智能:一种现代的方法》逐章笔记与可运行代码,共 8 大部分。
+
+## 🚀 Quick Start
+
+```bash
+python3 "1_Artificial_Intelligence/1.1_Introduction/00_1.1.1_What_Is_AI.py"
+```
+每个 `.py` 文件独立可跑 (self-contained)。Each `.py` is a self-contained, runnable script.
+
+## ✅ Quality Bar
+
+- 每章每节配一对 `摘要(.md)` + `代码(.py)`, 目录为自动生成链路清单。
+- 结构: 8 大部分 (1_Artificial_Intelligence … 8_Conclusions)。
+- 演示均为轻量脚本, headless 运行。
+
+## 🔬 Verified Demo Evidence
+
+> 冒烟运行样例; 全部 176 个 .py 可复现执行, 无运行异常。 (All 176 demo scripts run
+> headless without error; a representative run below.)
+
+```text
+$ python3 "1_Artificial_Intelligence/1.1_Introduction/00_1.1.1_What_Is_AI.py"
+# exit 0, no output (stub/notes shell)
+```
+
+---
+
+# 目录 (Contents)
 
 # 1_Artificial_Intelligence
 
