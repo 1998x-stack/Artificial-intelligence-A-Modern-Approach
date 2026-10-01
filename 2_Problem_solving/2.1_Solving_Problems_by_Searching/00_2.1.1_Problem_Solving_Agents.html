@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <title>2.1.1 Problem Solving Agents</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
+  <link rel="stylesheet" href="../../markdown.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="../../markdown.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>00_2.1.1_Problem-Solving_Agents</h1>
+<pre><code>
+Lecture: 2_Problem-solving/2.1_Solving_Problems_by_Searching
+Content: 00_2.1.1_Problem-Solving_Agents
+
+</code></pre>
+<h3>2.9.1 特征值方法</h3>
+<h4>引言</h4>
+<p>特征值方法在矩阵计算中占有重要地位，尤其是在处理对称矩阵和函数计算时。这些方法不仅应用广泛，而且在理论上也有深厚的基础。理解这些方法对于解决复杂的数值问题至关重要 。</p>
+<h4>1. 特征值与特征向量的定义</h4>
+<p>对于一个矩阵 $A$，如果存在一个标量 $\lambda$ 和一个非零向量 $x$ 使得 $Ax = \lambda x$，那么 $\lambda$ 被称为 $A$ 的特征值，$x$ 被称为对应的特征向量。对于对称矩阵，特征值都是实数，并且特征向量可以正交化 。</p>
+<h4>2. 特征值方法的基本性质</h4>
+<h5>2.1 对称 Schur 分解</h5>
+<p>对于一个对称矩阵 $A \in \mathbb{R}^{n \times n}$，存在一个正交矩阵 $Q$，使得 $Q^T A Q = \Lambda$，其中 $\Lambda$ 是对角矩阵，其对角元素为 $A$ 的特征值。这种分解称为对称 Schur 分解 。</p>
+<h5>2.2 特征值分解</h5>
+<p>特征值分解是特征值方法的核心。对于对称矩阵 $A$，其特征值分解可以表示为：
+$$ A = Q \Lambda Q^T $$
+其中，$Q$ 是由 $A$ 的特征向量组成的正交矩阵，$\Lambda$ 是由 $A$ 的特征值组成的对角矩阵。这种分解在许多算法中都有应用，包括求解线性方程组、优化问题和信号处理 。</p>
+<h4>3. 特征值方法的数值算法</h4>
+<h5>3.1 幂迭代法</h5>
+<p>幂迭代法是一种简单且有效的特征值算法，主要用于求解矩阵的主特征值及其对应的特征向量。其基本思想是，通过反复迭代，将一个初始向量逐步逼近于主特征向量。具体步骤如下：</p>
+<ol>
+<li>选择一个初始向量 $x_0$；</li>
+<li>在每次迭代中计算 $x_{k+1} = A x_k$；</li>
+<li>归一化 $x_{k+1}$；</li>
+<li>迭代直到收敛 。</li>
+</ol>
+<h5>3.2 反幂迭代法</h5>
+<p>反幂迭代法与幂迭代法相反，主要用于求解矩阵的最小特征值及其对应的特征向量。其基本步骤与幂迭代法类似，但在每次迭代中，需要求解线性方程组：
+$$ x_{k+1} = A^{-1} x_k $$
+反幂迭代法的收敛速度通常比幂迭代法快，但需要计算矩阵的逆或进行线性求解 。</p>
+<h5>3.3 QR 算法</h5>
+<p>QR 算法是一种广泛使用的特征值分解算法，特别适用于对称矩阵。其基本思想是，通过对矩阵进行 QR 分解，将其逐步对角化。具体步骤如下：</p>
+<ol>
+<li>对矩阵 $A$ 进行 QR 分解，得到 $A = QR$；</li>
+<li>计算新的矩阵 $A' = RQ$；</li>
+<li>重复上述步骤，直到矩阵 $A$ 收敛到对角矩阵 。</li>
+</ol>
+<h5>3.4 Jacobi 算法</h5>
+<p>Jacobi 算法是另一种常用的特征值分解算法，尤其适用于高精度需求的对称矩阵。其基本思想是，通过一系列的 Givens 旋转，将矩阵逐步对角化。每次旋转消除一个非对角元素，使得矩阵逐步接近于对角矩阵 。</p>
+<h4>4. 特征值方法的应用</h4>
+<p>特征值方法在科学计算和工程应用中有广泛的应用。例如，在振动分析中，特征值方法用于计算结构的固有频率；在图像处理和压缩中，特征值方法用于降维和去噪；在统计分析中，特征值方法用于主成分分析（PCA）和协方差矩阵的特征值分解 。</p>
+<h3>总结</h3>
+<h2>特征值方法是数值线性代数中的重要工具，通过理解和应用这些方法，可以有效地解决许多复杂的数值问题。通过不同的算法，如幂迭代法、反幂迭代法、QR 算法和 Jacobi 算法，可以在不同的应用场景中实现高效和精确的特征值分解。这些方法不仅在理论上有深厚的基础，而且在实际应用中也展现了其强大的功能和广泛的适用性 。</h2>
+<h3>特征值方法详细表</h3>
+<p>以下是关于特征值方法的极其详细的分析和描述，以表格形式呈现：</p>
+<table>
+<thead>
+<tr>
+<th><strong>主题</strong></th>
+<th><strong>详细描述</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>特征值与特征向量的定义</strong></td>
+<td>对于一个矩阵 $A$，如果存在一个标量 $\lambda$ 和一个非零向量 $x$ 使得 $Ax = \lambda x$，那么 $\lambda$ 被称为 $A$ 的特征值，$x$ 被称为对应的特征向量。对于对称矩阵，特征值都是实数，并且特征向量可以正交化。</td>
+</tr>
+<tr>
+<td><strong>特征值方法的基本性质</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>对称 Schur 分解</td>
+<td>对于一个对称矩阵 $A \in \mathbb{R}^{n \times n}$，存在一个正交矩阵 $Q$，使得 $Q^T A Q = \Lambda$，其中 $\Lambda$ 是对角矩阵，其对角元素为 $A$ 的特征值。这种分解称为对称 Schur 分解。</td>
+</tr>
+<tr>
+<td>特征值分解</td>
+<td>对称矩阵 $A$ 的特征值分解可以表示为：$$ A = Q \Lambda Q^T $$ 其中，$Q$ 是由 $A$ 的特征向量组成的正交矩阵，$\Lambda$ 是由 $A$ 的特征值组成的对角矩阵。这种分解在许多算法中都有应用，包括求解线性方程组、优化问题和信号处理。</td>
+</tr>
+<tr>
+<td><strong>特征值方法的数值算法</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>幂迭代法</td>
+<td>主要用于求解矩阵的主特征值及其对应的特征向量。其基本思想是通过反复迭代，将一个初始向量逐步逼近于主特征向量。具体步骤：1. 选择一个初始向量 $x_0$；2. 每次迭代中计算 $x_{k+1} = A x_k$；3. 归一化 $x_{k+1}$；4. 迭代直到收敛。</td>
+</tr>
+<tr>
+<td>反幂迭代法</td>
+<td>主要用于求解矩阵的最小特征值及其对应的特征向量。其步骤与幂迭代法类似，但每次迭代需要求解线性方程组：$$ x_{k+1} = A^{-1} x_k $$ 反幂迭代法的收敛速度通常比幂迭代法快，但需要计算矩阵的逆或进行线性求解。</td>
+</tr>
+<tr>
+<td>QR 算法</td>
+<td>广泛使用的特征值分解算法，特别适用于对称矩阵。其基本思想是通过对矩阵进行 QR 分解，将其逐步对角化。具体步骤：1. 对矩阵 $A$ 进行 QR 分解，得到 $A = QR$；2. 计算新的矩阵 $A' = RQ$；3. 重复上述步骤，直到矩阵 $A$ 收敛到对角矩阵。</td>
+</tr>
+<tr>
+<td>Jacobi 算法</td>
+<td>常用的特征值分解算法，尤其适用于高精度需求的对称矩阵。其基本思想是通过一系列的 Givens 旋转将矩阵逐步对角化。每次旋转消除一个非对角元素，使得矩阵逐步接近于对角矩阵。</td>
+</tr>
+<tr>
+<td><strong>特征值方法的应用</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>振动分析</td>
+<td>特征值方法用于计算结构的固有频率。</td>
+</tr>
+<tr>
+<td>图像处理和压缩</td>
+<td>特征值方法用于降维和去噪。</td>
+</tr>
+<tr>
+<td>统计分析</td>
+<td>特征值方法用于主成分分析（PCA）和协方差矩阵的特征值分解。</td>
+</tr>
+</tbody>
+</table>
+<h3>详细说明</h3>
+<ol>
+<li>
+<p><strong>特征值与特征向量的定义</strong></p>
+<ul>
+<li>特征值和特征向量的概念是线性代数中的基本组成部分。它们提供了矩阵在特定变换下的伸缩因子和方向。</li>
+<li>对于对称矩阵，所有特征值都是实数，这是因为对称矩阵总是可以对角化且其特征向量可以正交化。</li>
+</ul>
+</li>
+<li>
+<p><strong>特征值方法的基本性质</strong></p>
+<ul>
+<li><strong>对称 Schur 分解</strong>：这种分解用于将对称矩阵分解为正交矩阵和对角矩阵的乘积，具有较高的数值稳定性。</li>
+<li><strong>特征值分解</strong>：特征值分解对于解决许多数值问题（如线性方程组和信号处理）是非常有用的。对称矩阵的特征值分解特别简单，因为其特征值都是实数。</li>
+</ul>
+</li>
+<li>
+<p><strong>特征值方法的数值算法</strong></p>
+<ul>
+<li><strong>幂迭代法</strong>：通过反复迭代计算一个初始向量，使其逐步逼近于矩阵的主特征向量。此方法简单且有效，但对初始向量的选择有一定要求。</li>
+<li><strong>反幂迭代法</strong>：用于计算矩阵的最小特征值，通过求解线性方程组来逼近最小特征向量。此方法收敛速度快，但需要计算矩阵的逆。</li>
+<li><strong>QR 算法</strong>：一种非常通用的特征值分解方法，通过 QR 分解将矩阵逐步对角化，适用于大多数矩阵类型，特别是对称矩阵。</li>
+<li><strong>Jacobi 算法</strong>：通过 Givens 旋转将矩阵逐步对角化，适用于高精度需求的场合，但计算复杂度较高。</li>
+</ul>
+</li>
+<li>
+<p><strong>特征值方法的应用</strong></p>
+<ul>
+<li><strong>振动分析</strong>：通过计算结构的特征值，可以确定结构的固有频率，这对于工程设计和安全评估非常重要。</li>
+<li><strong>图像处理和压缩</strong>：通过降维和去噪处理，提高图像处理和压缩的效率。</li>
+<li><strong>统计分析</strong>：在 PCA 中，特征值分解用于确定数据的主要成分，协方差矩阵的特征值分解用于分析数据的相关性结构。</li>
+</ul>
+</li>
+</ol>
+
+    <h3>Python 文件</h3>
+    <pre><code># 00_2.1.1_Problem-Solving_Agents
+
+"""
+
+Lecture: 2_Problem-solving/2.1_Solving_Problems_by_Searching
+Content: 00_2.1.1_Problem-Solving_Agents
+
+"""
+
+import numpy as np
+from typing import Tuple
+
+class EigenvalueMethods:
+    def __init__(self, matrix: np.ndarray):
+        """
+        初始化特征值方法类。
+
+        Args:
+        - matrix (np.ndarray): 需要进行特征值分解的矩阵。
+        """
+        assert matrix.shape[0] == matrix.shape[1], "矩阵必须是方阵。"
+        self.matrix = matrix
+        self.n = matrix.shape[0]
+
+    def power_iteration(self, max_iterations: int = 1000, tol: float = 1e-10) -> Tuple[float, np.ndarray]:
+        """
+        使用幂迭代法计算矩阵的主特征值及其对应的特征向量。
+
+        Args:
+        - max_iterations (int): 最大迭代次数。
+        - tol (float): 收敛容差。
+
+        Returns:
+        - eigenvalue (float): 主特征值。
+        - eigenvector (np.ndarray): 对应的特征向量。
+        """
+        b_k = np.random.rand(self.n)
+        b_k /= np.linalg.norm(b_k)
+
+        for _ in range(max_iterations):
+            b_k1 = np.dot(self.matrix, b_k)
+            b_k1_norm = np.linalg.norm(b_k1)
+            b_k1 /= b_k1_norm
+
+            if np.linalg.norm(b_k1 - b_k) < tol:
+                break
+
+            b_k = b_k1
+
+        eigenvalue = np.dot(b_k.T, np.dot(self.matrix, b_k))
+        return eigenvalue, b_k
+
+    def inverse_power_iteration(self, shift: float, max_iterations: int = 1000, tol: float = 1e-10) -> Tuple[float, np.ndarray]:
+        """
+        使用反幂迭代法计算矩阵的最小特征值及其对应的特征向量。
+
+        Args:
+        - shift (float): 移位参数。
+        - max_iterations (int): 最大迭代次数。
+        - tol (float): 收敛容差。
+
+        Returns:
+        - eigenvalue (float): 最小特征值。
+        - eigenvector (np.ndarray): 对应的特征向量。
+        """
+        shifted_matrix = self.matrix - shift * np.eye(self.n)
+        b_k = np.random.rand(self.n)
+        b_k /= np.linalg.norm(b_k)
+
+        for _ in range(max_iterations):
+            b_k1 = np.linalg.solve(shifted_matrix, b_k)
+            b_k1_norm = np.linalg.norm(b_k1)
+            b_k1 /= b_k1_norm
+
+            if np.linalg.norm(b_k1 - b_k) < tol:
+                break
+
+            b_k = b_k1
+
+        eigenvalue = np.dot(b_k.T, np.dot(self.matrix, b_k))
+        return eigenvalue, b_k
+
+    def qr_algorithm(self, max_iterations: int = 1000, tol: float = 1e-10) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        使用 QR 算法计算矩阵的所有特征值和特征向量。
+
+        Args:
+        - max_iterations (int): 最大迭代次数。
+        - tol (float): 收敛容差。
+
+        Returns:
+        - eigenvalues (np.ndarray): 矩阵的特征值。
+        - eigenvectors (np.ndarray): 对应的特征向量。
+        """
+        A = self.matrix.copy()
+        Q_total = np.eye(self.n)
+
+        for _ in range(max_iterations):
+            Q, R = np.linalg.qr(A)
+            A = R @ Q
+            Q_total = Q_total @ Q
+
+            if np.allclose(A - np.diag(np.diag(A)), 0, atol=tol):
+                break
+
+        eigenvalues = np.diag(A)
+        return eigenvalues, Q_total
+
+    def jacobi_method(self, max_iterations: int = 1000, tol: float = 1e-10) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        使用 Jacobi 方法计算矩阵的所有特征值和特征向量。
+
+        Args:
+        - max_iterations (int): 最大迭代次数。
+        - tol (float): 收敛容差。
+
+        Returns:
+        - eigenvalues (np.ndarray): 矩阵的特征值。
+        - eigenvectors (np.ndarray): 对应的特征向量。
+        """
+        A = self.matrix.copy()
+        V = np.eye(self.n)
+
+        for iteration in range(max_iterations):
+            max_val = 0
+            p = q = 0
+
+            for i in range(self.n):
+                for j in range(i + 1, self.n):
+                    if abs(A[i, j]) > max_val:
+                        max_val = abs(A[i, j])
+                        p, q = i, j
+
+            if max_val < tol:
+                break
+
+            if A[p, p] != A[q, q]:
+                phi = 0.5 * np.arctan(2 * A[p, q] / (A[q, q] - A[p, p]))
+            else:
+                phi = np.pi / 4
+
+            c = np.cos(phi)
+            s = np.sin(phi)
+
+            J = np.eye(self.n)
+            J[p, p] = c
+            J[q, q] = c
+            J[p, q] = s
+            J[q, p] = -s
+
+            A = J.T @ A @ J
+            V = V @ J
+
+        eigenvalues = np.diag(A)
+        return eigenvalues, V
+
+# 示例矩阵
+matrix = np.array([
+    [4, 1, 2],
+    [1, 2, 0],
+    [2, 0, 3]
+])
+
+solver = EigenvalueMethods(matrix)
+
+# 使用幂迭代法计算主特征值及其对应的特征向量
+eigenvalue, eigenvector = solver.power_iteration()
+print("主特征值:", eigenvalue)
+print("对应的特征向量:\n", eigenvector)
+
+# 使用反幂迭代法计算最小特征值及其对应的特征向量
+eigenvalue, eigenvector = solver.inverse_power_iteration(shift=1.0)
+print("最小特征值:", eigenvalue)
+print("对应的特征向量:\n", eigenvector)
+
+# 使用 QR 算法计算所有特征值和特征向量
+eigenvalues, eigenvectors = solver.qr_algorithm()
+print("特征值 (QR 算法):", eigenvalues)
+print("特征向量 (QR 算法):\n", eigenvectors)
+
+# 使用 Jacobi 方法计算所有特征值和特征向量
+eigenvalues, eigenvectors = solver.jacobi_method()
+print("特征值 (Jacobi 方法):", eigenvalues)
+print("特征向量 (Jacobi 方法):\n", eigenvectors)
+</code></pre>
+  </div>
+</body>
+</html>
+  

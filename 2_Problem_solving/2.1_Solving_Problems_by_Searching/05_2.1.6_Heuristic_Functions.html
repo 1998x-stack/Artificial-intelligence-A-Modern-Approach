@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <title>2.1.6 Heuristic Functions</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
+  <link rel="stylesheet" href="../../markdown.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="../../markdown.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>05_2.1.6_Heuristic_Functions</h1>
+<pre><code>
+Lecture: 2_Problem-solving/2.1_Solving_Problems_by_Searching
+Content: 05_2.1.6_Heuristic_Functions
+
+</code></pre>
+<h3>2.1.6 启发式函数</h3>
+<h4>1. 引言</h4>
+<p>启发式函数（Heuristic Functions）在启发式搜索算法中扮演着关键角色。它们通过估计当前状态到目标状态的代价，引导搜索算法朝着更有希望的方向前进。启发式函数的设计和选择直接影响到搜索算法的效率和效果。本章将详细探讨启发式函数的基本概念、构造方法及其在实际应用中的作用。</p>
+<h4>2. 启发式函数的基本概念</h4>
+<p>启发式函数 $ h(n) $ 是一种评估函数，用于估计从节点 $ n $ 到目标节点的最小成本。在启发式搜索中，启发式函数帮助算法优先考虑那些看起来最有希望的节点，从而减少搜索空间，加快找到解决方案的速度。</p>
+<p>理想的启发式函数应具备以下特性：</p>
+<ul>
+<li><strong>可计算性</strong>：在合理的时间内计算出启发值。</li>
+<li><strong>一致性（单调性）</strong>：对于每个节点 $ n $，如果启发函数满足 $ h(n) \leq c(n, n') + h(n') $，其中 $ c(n, n') $ 是节点 $ n $ 到 $ n' $ 的实际代价，则启发函数是一致的。</li>
+<li><strong>可接受性</strong>：启发式函数应尽可能接近实际代价，但不应超过实际代价。</li>
+</ul>
+<h4>3. 启发式函数的构造方法</h4>
+<h5>3.1 域特定知识</h5>
+<p>利用领域特定的知识构造启发式函数是最常见的方法。例如，在路径规划问题中，欧几里得距离或曼哈顿距离可以作为启发式函数，用于估计当前节点到目标节点的最短距离。</p>
+<h5>3.2 简化问题</h5>
+<p>通过求解简化版的原问题来构造启发式函数。例如，在拼图问题中，可以计算当前状态和目标状态之间错位的拼图块数量作为启发式值。</p>
+<h5>3.3 组合启发式</h5>
+<p>将多个启发式函数结合起来，取其最大值或加权平均值，以获得更准确的估计。例如，可以将欧几里得距离和曼哈顿距离结合起来，形成一个更强的启发式函数。</p>
+<h4>4. 启发式函数的评价标准</h4>
+<h5>4.1 启发函数的可接受性（Admissibility）</h5>
+<p>一个启发式函数是可接受的，如果它从不超过实际的最小成本。可接受的启发式函数能够保证算法找到最优解。</p>
+<h5>4.2 启发函数的一致性（Consistency）</h5>
+<p>一致的启发式函数不仅可接受，而且满足三角不等式，即 $ h(n) \leq c(n, n') + h(n') $。一致的启发式函数确保算法的有效性和最优性。</p>
+<h5>4.3 启发函数的支配性（Dominance）</h5>
+<p>在两个启发式函数 $ h1 $ 和 $ h2 $ 之间，如果对所有节点 $ n $，$ h1(n) \geq h2(n) $，则称 $ h1 $ 支配 $ h2 $。在搜索过程中，使用支配的启发式函数可以减少搜索空间，提高搜索效率。</p>
+<h4>5. 启发式函数的实际应用</h4>
+<h5>5.1 路径规划</h5>
+<p>在路径规划问题中，启发式函数常用于估计当前节点到目标节点的距离。常见的启发式函数包括：</p>
+<ul>
+<li><strong>欧几里得距离</strong>：适用于自由空间中的路径规划。</li>
+<li><strong>曼哈顿距离</strong>：适用于格子地图中的路径规划。</li>
+</ul>
+<h5>5.2 拼图问题</h5>
+<p>在拼图问题中，启发式函数用于估计当前状态与目标状态之间的距离。常见的启发式函数包括：</p>
+<ul>
+<li><strong>错位块数量</strong>：计算当前状态和目标状态之间错位的拼图块数量。</li>
+<li><strong>曼哈顿距离</strong>：计算每个拼图块从当前状态移动到目标状态所需的步数之和。</li>
+</ul>
+<h5>5.3 其他应用</h5>
+<p>启发式函数还广泛应用于其他问题，如约束满足问题、图搜索问题等。通过合理设计启发式函数，可以显著提高搜索算法的效率和效果。</p>
+<h4>6. 总结</h4>
+<p>启发式函数在启发式搜索算法中具有重要作用。通过合理设计和选择启发式函数，可以大幅提高搜索算法的效率和效果。在实际应用中，结合领域知识和问题特性，构造出适合的启发式函数是成功解决问题的关键。</p>
+
+    <h3>Python 文件</h3>
+    <pre><code># 05_2.1.6_Heuristic_Functions
+
+"""
+
+Lecture: 2_Problem-solving/2.1_Solving_Problems_by_Searching
+Content: 05_2.1.6_Heuristic_Functions
+
+"""
+
+import numpy as np
+from typing import Tuple, List
+
+class HeuristicFunctions:
+    @staticmethod
+    def manhattan_distance(start: Tuple[int, int], goal: Tuple[int, int]) -> int:
+        """
+        计算曼哈顿距离。
+
+        Args:
+        - start (Tuple[int, int]): 起始节点的坐标 (x, y)。
+        - goal (Tuple[int, int]): 目标节点的坐标 (x, y)。
+
+        Returns:
+        - int: 曼哈顿距离。
+        """
+        return abs(start[0] - goal[0]) + abs(start[1] - goal[1])
+
+    @staticmethod
+    def euclidean_distance(start: Tuple[int, int], goal: Tuple[int, int]) -> float:
+        """
+        计算欧几里得距离。
+
+        Args:
+        - start (Tuple[int, int]): 起始节点的坐标 (x, y)。
+        - goal (Tuple[int, int]): 目标节点的坐标 (x, y)。
+
+        Returns:
+        - float: 欧几里得距离。
+        """
+        return np.sqrt((start[0] - goal[0]) ** 2 + (start[1] - goal[1]) ** 2)
+
+    @staticmethod
+    def misplaced_tiles(state: List[List[int]], goal: List[List[int]]) -> int:
+        """
+        计算拼图问题中的错位块数量。
+
+        Args:
+        - state (List[List[int]]): 当前拼图状态。
+        - goal (List[List[int]]): 目标拼图状态。
+
+        Returns:
+        - int: 错位块数量。
+        """
+        state_arr = np.array(state)
+        goal_arr = np.array(goal)
+        return np.sum(state_arr != goal_arr) - 1  # 减去空格的比较
+
+# 示例用法
+start = (1, 2)
+goal = (4, 6)
+
+print(f"曼哈顿距离: {HeuristicFunctions.manhattan_distance(start, goal)}")
+print(f"欧几里得距离: {HeuristicFunctions.euclidean_distance(start, goal):.2f}")
+
+state = [
+    [1, 2, 3],
+    [4, 0, 5],
+    [7, 8, 6]
+]
+
+goal_state = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 0]
+]
+
+print(f"错位块数量: {HeuristicFunctions.misplaced_tiles(state, goal_state)}")
+</code></pre>
+  </div>
+</body>
+</html>
+  

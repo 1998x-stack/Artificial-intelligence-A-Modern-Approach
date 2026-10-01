@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <title>2.4.1 Defining Constraint Satisfaction Problems</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
+  <link rel="stylesheet" href="../../markdown.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="../../markdown.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>00_2.4.1_Defining_Constraint_Satisfaction_Problems</h1>
+<pre><code>
+Lecture: 2_Problem-solving/2.4_Constraint_Satisfaction_Problems
+Content: 00_2.4.1_Defining_Constraint_Satisfaction_Problems
+
+</code></pre>
+<h3>2.4.1 定义约束满足问题</h3>
+<p>在本节中，我们深入探讨了约束满足问题（Constraint Satisfaction Problems，CSP）的定义及其基本概念。CSP 是一种数学问题，涉及变量集合，每个变量都有一个取值范围（域），并且需要满足一组约束条件。这类问题在人工智能、优化和计算理论等领域有着广泛的应用。以下是对这一章的详细分析：</p>
+<h4>1. 引言</h4>
+<p>约束满足问题是许多实际问题的抽象模型。CSP 的目标是找到一个变量赋值，使得所有约束条件都得到满足。常见的 CSP 应用包括数独、时间表安排、地图着色和资源分配等。</p>
+<h4>2. 变量、域和约束</h4>
+<p>一个典型的 CSP 由三个基本组成部分：</p>
+<ul>
+<li><strong>变量（Variables）</strong>：问题中的元素，每个变量都需要赋值。例如，在数独问题中，每个格子就是一个变量。</li>
+<li><strong>域（Domains）</strong>：每个变量的取值范围。例如，在数独问题中，每个格子的取值范围是1到9。</li>
+<li><strong>约束（Constraints）</strong>：变量之间的限制条件，规定了哪些变量赋值组合是允许的。例如，在数独问题中，每行、每列和每个子方块中的数字不能重复。</li>
+</ul>
+<h4>3. 约束图</h4>
+<p>约束图（Constraint Graph）是表示 CSP 的一种方法，其中节点表示变量，边表示变量之间的约束关系。通过约束图，可以直观地了解变量之间的依赖关系，从而帮助设计求解算法。</p>
+<h4>4. 约束类型</h4>
+<p>约束可以分为不同类型：</p>
+<ul>
+<li><strong>一元约束（Unary Constraints）</strong>：涉及单个变量的约束。例如，某个变量只能取某些特定值。</li>
+<li><strong>二元约束（Binary Constraints）</strong>：涉及两个变量之间的约束。例如，两个变量的取值不能相同。</li>
+<li><strong>全局约束（Global Constraints）</strong>：涉及多个变量的约束。例如，在时间表安排中，多个任务不能同时进行。</li>
+</ul>
+<h4>5. 约束传播</h4>
+<p>约束传播（Constraint Propagation）是一种用于简化 CSP 的技术，通过减少变量的取值范围来加速求解过程。常见的约束传播算法包括：</p>
+<ul>
+<li><strong>节点一致性（Node Consistency）</strong>：确保每个变量满足其一元约束。</li>
+<li><strong>弧一致性（Arc Consistency）</strong>：确保每个变量对满足其二元约束的所有取值都有支持。</li>
+<li><strong>路径一致性（Path Consistency）</strong>：确保任意三个变量之间的取值满足三元约束。</li>
+</ul>
+<h4>6. 求解方法</h4>
+<p>求解 CSP 的常见方法包括：</p>
+<ul>
+<li><strong>回溯搜索（Backtracking Search）</strong>：一种系统的搜索方法，通过递归地为每个变量赋值，并在遇到冲突时回溯，重新尝试其他取值。</li>
+<li><strong>前向检查（Forward Checking）</strong>：在回溯搜索过程中，通过提前检查当前赋值对未赋值变量的影响，提前检测冲突。</li>
+<li><strong>约束传播结合搜索（Constraint Propagation Combined with Search）</strong>：结合约束传播和回溯搜索，通过在搜索过程中不断简化问题，提高求解效率。</li>
+</ul>
+<h4>7. 复杂度分析</h4>
+<p>CSP 的复杂度分析涉及变量数目、每个变量的取值范围以及约束的复杂度。尽管 CSP 在最坏情况下可能是 NP 完全的，但许多实际问题可以通过启发式方法、约束传播和智能搜索策略高效求解。</p>
+<h3>总结</h3>
+<p>约束满足问题为解决许多实际问题提供了一个通用的框架。通过定义变量、域和约束，并使用约束传播和搜索策略，研究者和工程师能够高效地求解复杂的约束问题。CSP 的广泛应用展示了其在人工智能和优化领域的重要性，通过深入理解和应用这些技术，可以开发出更加智能和高效的系统以应对各种实际挑战。</p>
+
+    <h3>Python 文件</h3>
+    <pre><code># 00_2.4.1_Defining_Constraint_Satisfaction_Problems
+
+"""
+
+Lecture: 2_Problem-solving/2.4_Constraint_Satisfaction_Problems
+Content: 00_2.4.1_Defining_Constraint_Satisfaction_Problems
+
+"""
+
+</code></pre>
+  </div>
+</body>
+</html>
+  

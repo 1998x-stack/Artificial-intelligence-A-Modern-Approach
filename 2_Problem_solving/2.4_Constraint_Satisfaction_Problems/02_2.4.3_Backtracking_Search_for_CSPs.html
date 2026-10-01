@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <title>2.4.3 Backtracking Search for CSPs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
+  <link rel="stylesheet" href="../../markdown.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="../../markdown.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>02_2.4.3_Backtracking_Search_for_CSPs</h1>
+<pre><code>
+Lecture: 2_Problem-solving/2.4_Constraint_Satisfaction_Problems
+Content: 02_2.4.3_Backtracking_Search_for_CSPs
+
+</code></pre>
+<h3>引言（详尽分析）</h3>
+<p>引言部分概述了从云计算到边缘计算的转变，并详细讨论了这一转变的动因及其重要性。以下是引言部分的详细分析：</p>
+<h4>背景与动机</h4>
+<p>引言首先指出，随着物联网（IoT）和4G/5G技术的普及，人们访问和处理数据的习惯逐渐改变，这对传统云计算提出了挑战。云计算尽管功能强大，但在处理物联网数据时面临延迟和带宽限制的问题。因此，边缘计算应运而生，它是一种在网络边缘处理数据的新计算范式。边缘计算的快速发展得益于人们对低延迟、高带宽和实时处理需求的增加  。</p>
+<h4>边缘计算的定义</h4>
+<p>边缘计算通过在网络边缘部署计算资源，使数据处理靠近数据源，从而显著减少数据传输的延迟，改善用户体验。边缘计算不仅提供计算资源，还集成了存储和网络资源，为开发者提供灵活的计算基础设施，以支持边缘应用的快速开发和部署。</p>
+<h4>研究目标</h4>
+<p>本文的研究目标是提供现有边缘计算系统的全面概述。具体包括：</p>
+<ol>
+<li><strong>现有边缘计算系统的回顾</strong>：对当前已有的边缘计算系统进行介绍和分析，展示其设计需求和创新点。</li>
+<li><strong>代表性项目的介绍</strong>：详细介绍一些具有代表性的边缘计算项目，探讨其架构、特点和应用场景。</li>
+<li><strong>开源工具的比较</strong>：根据适用性对开源工具进行比较研究，评估其优缺点。</li>
+<li><strong>能效与深度学习优化</strong>：讨论边缘计算系统中的能效机制以及如何在边缘设备上优化深度学习模型。</li>
+<li><strong>开放研究问题</strong>：分析边缘计算系统设计中的挑战和未解决的研究问题。</li>
+</ol>
+<h4>边缘计算系统的分类</h4>
+<p>根据设计需求和动机，现有的边缘计算系统可以大致分为三类：</p>
+<ol>
+<li><strong>从云推送</strong>：云提供商将服务和计算推送到边缘，以利用本地性，减少响应时间，提高用户体验。代表性系统包括Cloudlet、Cachier、AirBox和CloudPath。这些系统通过缩短客户与云计算的距离，避免了市场被移动边缘计算占据  。</li>
+<li><strong>从物联网拉取</strong>：物联网应用从远端云拉取服务和计算到近边缘，以处理大量的物联网设备生成的数据。代表性系统包括PCloud、ParaDrop、FocusStack和SpanEdge。这些系统利用嵌入式系统芯片的进步，使物联网设备能够运行复杂算法，并有效共享计算、存储和网络资源  。</li>
+<li><strong>混合云-边缘分析</strong>：结合云和边缘的优势，为现代高级服务和应用提供全局优化和最小响应时间的解决方案。代表性系统包括Firework和Cloud-Sea Computing Systems。这些系统利用物联网设备的处理能力进行数据过滤、预处理和聚合，同时利用云服务的强大计算能力进行复杂分析  。</li>
+</ol>
+<h4>本文的结构</h4>
+<p>本文通过系统回顾、开源工具比较、能效机制和深度学习优化等多个方面，对边缘计算系统进行详细探讨，并识别出设计和分析边缘计算系统时需要解决的关键问题  。</p>
+<h4>贡献</h4>
+<p>本文的主要贡献包括：</p>
+<ol>
+<li><strong>系统分类与比较</strong>：通过对设计需求和创新点的分类，比较分析现有边缘计算系统，研究其目标、架构、特点和局限性。</li>
+<li><strong>能效增强机制</strong>：探讨从云层、边缘服务器层和设备层三个层面增强能效的机制，分析各层面的具体措施。</li>
+<li><strong>深度学习模型的边缘部署</strong>：研究如何在边缘设备上高效部署和运行深度学习模型，包括系统和工具包、硬件平台等方面的技术创新。</li>
+<li><strong>开放问题的识别</strong>：识别边缘计算系统设计中的关键问题，如移动性支持、多用户公平性、隐私保护等，提出潜在的解决方案。</li>
+</ol>
+<p>综上所述，引言部分全面介绍了边缘计算系统的背景、研究目标、主要贡献和分类，为后续章节的详细讨论奠定了基础。</p>
+
+    <h3>Python 文件</h3>
+    <pre><code># 02_2.4.3_Backtracking_Search_for_CSPs
+
+"""
+
+Lecture: 2_Problem-solving/2.4_Constraint_Satisfaction_Problems
+Content: 02_2.4.3_Backtracking_Search_for_CSPs
+
+"""
+
+</code></pre>
+  </div>
+</body>
+</html>
+  

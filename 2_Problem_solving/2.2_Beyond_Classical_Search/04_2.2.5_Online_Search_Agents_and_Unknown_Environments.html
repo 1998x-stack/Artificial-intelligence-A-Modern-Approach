@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <title>2.2.5 Online Search Agents and Unknown Environments</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
+  <link rel="stylesheet" href="../../markdown.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="../../markdown.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>04_2.2.5_Online_Search_Agents_and_Unknown_Environments</h1>
+<pre><code>
+Lecture: 2_Problem-solving/2.2_Beyond_Classical_Search
+Content: 04_2.2.5_Online_Search_Agents_and_Unknown_Environments
+
+</code></pre>
+<h3>4.5 在线搜索代理与未知环境</h3>
+<p>在这一部分内容中，我们将探讨在线搜索代理（Online Search Agents）在未知环境中如何进行搜索与探索。在线搜索与传统的离线搜索不同，它将计算和行动交替进行，以适应动态或半动态的环境。这种方法特别适用于非确定性域，因为代理可以专注于实际发生的情况，而不是可能发生的所有情况。</p>
+<h4>1. 引言</h4>
+<p>离线搜索代理首先计算出完整的解决方案，然后在现实世界中执行。然而，在线搜索代理将计算和行动交替进行：首先执行一个动作，然后观测环境，再计算下一步动作  。</p>
+<p>在线搜索在动态或半动态的域中非常有用，因为在这些域中，过长时间的计算可能会带来惩罚。在线搜索也适用于非确定性域，因为它允许代理专注于实际发生的情况，而不是那些可能发生但不大可能发生的情况 。</p>
+<h4>2. 在线搜索问题</h4>
+<p>在线搜索问题必须通过代理执行动作来解决，而不是纯粹通过计算。我们假设环境是确定性和完全可观测的，代理只知道以下内容 ：</p>
+<ul>
+<li>ACTIONS(s)：返回状态 s 中允许的动作列表；</li>
+<li>步骤成本函数 c(s, a, s')：在代理知道 s' 是结果之前无法使用；</li>
+<li>目标测试函数 GOAL-TEST(s)。</li>
+</ul>
+<p>特别要注意的是，代理无法通过纯粹的计算确定 RESULT(s, a)，只能通过实际处于 s 并执行 a 来确定。例如，在迷宫问题中，代理不知道从 (1,1) 向上移动会到达 (1,2)；执行这个动作后，代理才知道这个结果 。</p>
+<h4>3. 竞争比率</h4>
+<p>通常，代理的目标是在最小化成本的同时到达目标状态。成本是代理实际行走路径的总成本。我们通常将这个成本与代理在提前知道搜索空间时会遵循的路径成本进行比较——即实际的最短路径。在在线算法的语言中，这称为竞争比率，我们希望它尽可能小 。</p>
+<p>然而，在某些情况下，最优竞争比率可能是无限的。例如，如果某些动作是不可逆的，在线搜索可能会意外进入一个死胡同状态，从中没有任何动作可以到达目标状态 。</p>
+<h4>4. 在线搜索代理</h4>
+<p>在每次动作之后，在线代理会接收到一个感知信息，告诉它已经到达的状态；通过这些信息，代理可以更新其环境地图。这种规划和行动的交替意味着在线搜索算法与离线搜索算法有很大不同 。例如，离线算法可以在空间的一部分扩展一个节点，然后立即扩展空间的另一部分节点，因为节点扩展涉及模拟而不是实际动作。而在线算法只能为它物理占据的节点发现后继节点。</p>
+<p>在线深度优先搜索代理如图4.21所示。该代理在一个表格中存储其地图，记录从状态 s 执行动作 a 后的结果状态 。每当当前状态中的动作没有被探索时，代理就会尝试该动作。当代理在一个状态中尝试了所有动作后，必须物理地回溯。</p>
+<h4>5. 在线本地搜索</h4>
+<p>与深度优先搜索一样，爬山搜索（Hill-Climbing Search）在其节点扩展中具有局部性特点。由于它只在内存中保留一个当前状态，爬山搜索已经是一种在线搜索算法。然而，它在其最简单的形式中并不十分有用，因为它会让代理停留在局部最大值处，无处可去 。</p>
+<p>随机漫步（Random Walk）是一种探索环境的方法，它随机选择当前状态下可用的一个动作。虽然随机漫步最终会找到目标或完成探索，但过程可能非常缓慢。通过记忆而不是随机性来增强爬山搜索是更有效的方法。基本思想是存储每个访问过的状态到目标的“当前最佳估计” 。</p>
+<h4>6. 在线搜索中的学习</h4>
+<p>在线搜索代理的初始无知提供了若干学习机会。首先，代理通过记录其每次经验来学习环境的“地图”。其次，本地搜索代理通过使用局部更新规则获取每个状态的更准确的成本估计 。</p>
+<p>在在线搜索过程中，代理不断通过实际操作和环境反馈进行学习和调整。这种自适应能力使得在线搜索代理在面对未知环境时能够逐步构建有效的策略，以实现其目标。</p>
+
+    <h3>Python 文件</h3>
+    <pre><code># 04_2.2.5_Online_Search_Agents_and_Unknown_Environments
+
+"""
+
+Lecture: 2_Problem-solving/2.2_Beyond_Classical_Search
+Content: 04_2.2.5_Online_Search_Agents_and_Unknown_Environments
+
+"""
+
+</code></pre>
+  </div>
+</body>
+</html>
+  

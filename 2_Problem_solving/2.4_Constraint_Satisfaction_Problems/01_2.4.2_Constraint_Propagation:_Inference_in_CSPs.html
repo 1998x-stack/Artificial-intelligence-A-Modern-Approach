@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <title>2.4.2 Constraint Propagation: Inference in CSPs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
+  <link rel="stylesheet" href="../../markdown.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="../../markdown.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>01_2.4.2_Constraint_Propagation:_Inference_in_CSPs</h1>
+<pre><code>
+Lecture: 2_Problem-solving/2.4_Constraint_Satisfaction_Problems
+Content: 01_2.4.2_Constraint_Propagation:_Inference_in_CSPs
+
+</code></pre>
+<h3>2.4.2 约束传播：CSP中的推理</h3>
+<p>在本节中，我们深入探讨了约束传播（Constraint Propagation）技术及其在约束满足问题（CSP）中的推理方法。约束传播是一种用于简化CSP并提高求解效率的关键技术。通过减少变量的取值范围，约束传播能够有效地缩小搜索空间，从而加快求解过程。以下是对这一章的详细分析：</p>
+<h4>1. 引言</h4>
+<p>约束传播是CSP中一种重要的推理技术。它通过逐步消除不可能的变量取值，确保剩余的取值满足所有约束条件，从而简化问题。这一过程通过反复应用一致性算法来实现，每次应用都进一步缩小变量的取值范围。</p>
+<h4>2. 一致性算法</h4>
+<p>一致性算法是约束传播的核心，通过保证变量间的一致性，逐步消除不可能的解。常见的一致性算法包括：</p>
+<ul>
+<li><strong>节点一致性（Node Consistency）</strong>：确保每个变量的取值满足其单独的约束。例如，变量的取值必须在其域内。</li>
+<li><strong>弧一致性（Arc Consistency）</strong>：确保每对变量之间的二元约束得到满足。如果一个变量的某个取值不能与另一个变量的任何取值配对，则可以将该取值从其域中删除。</li>
+<li><strong>路径一致性（Path Consistency）</strong>：确保任何三个变量之间的三元约束得到满足。路径一致性通过检查变量之间的所有可能三元组合来消除不一致的取值。</li>
+</ul>
+<h4>3. 弧一致性算法</h4>
+<p>弧一致性算法（例如AC-3）是最常用的约束传播算法之一。其基本步骤如下：</p>
+<ol>
+<li><strong>初始化</strong>：将所有二元约束放入队列。</li>
+<li><strong>处理队列</strong>：从队列中取出一个约束，检查其一致性。如果发现不一致，则更新变量的域，并将相关的约束重新加入队列。</li>
+<li><strong>重复</strong>：重复以上步骤，直到队列为空或无法进一步简化。</li>
+</ol>
+<p>通过反复应用上述步骤，弧一致性算法能够有效地减少变量的取值范围，从而简化CSP。</p>
+<h4>4. 前向检查</h4>
+<p>前向检查是一种结合搜索和约束传播的技术。在回溯搜索过程中，前向检查通过提前检查当前赋值对未赋值变量的影响，提前检测冲突。这一过程通过每次赋值后立即进行弧一致性检查来实现，从而避免不必要的回溯。</p>
+<p>前向检查的基本步骤如下：</p>
+<ol>
+<li><strong>变量赋值</strong>：对当前变量进行赋值。</li>
+<li><strong>检查一致性</strong>：应用弧一致性算法，检查新赋值对未赋值变量的影响。</li>
+<li><strong>检测冲突</strong>：如果发现冲突，立即回溯并尝试其他赋值；如果无冲突，继续下一个变量的赋值。</li>
+</ol>
+<p>前向检查通过提前消除不一致的取值，大大减少了搜索空间，提高了求解效率。</p>
+<h4>5. 结合搜索的约束传播</h4>
+<p>结合搜索和约束传播的求解方法是解决CSP的一种高效策略。通过在搜索过程中不断应用约束传播，可以显著减少搜索空间并加快求解速度。这种方法通常包括以下步骤：</p>
+<ol>
+<li><strong>初始化</strong>：对所有变量应用初始的约束传播算法（如AC-3），简化问题。</li>
+<li><strong>递归搜索</strong>：在搜索过程中，每次赋值后立即进行约束传播，提前消除不一致的取值。</li>
+<li><strong>回溯</strong>：在遇到冲突时回溯，并尝试其他可能的赋值。</li>
+</ol>
+<p>这种结合搜索和约束传播的方法，既能利用搜索策略的系统性，又能发挥约束传播的高效性，是解决复杂CSP的常用技术。</p>
+<h3>总结</h3>
+<p>约束传播是解决CSP的一种关键技术，通过逐步消除不可能的取值来简化问题。常见的一致性算法如节点一致性、弧一致性和路径一致性，以及结合搜索的前向检查等技术，都是约束传播的重要手段。通过深入理解和应用这些技术，研究者和工程师能够高效地求解各种复杂的约束问题，提高求解效率和性能。</p>
+
+    <h3>Python 文件</h3>
+    <pre><code># 01_2.4.2_Constraint_Propagation:_Inference_in_CSPs
+
+"""
+
+Lecture: 2_Problem-solving/2.4_Constraint_Satisfaction_Problems
+Content: 01_2.4.2_Constraint_Propagation:_Inference_in_CSPs
+
+"""
+
+import numpy as np
+from typing import List, Tuple, Dict, Any, Set
+
+class CSP:
+    def __init__(self, variables: List[Any], domains: Dict[Any, List[Any]], constraints: Dict[Tuple[Any, Any], Set[Tuple[Any, Any]]]):
+        """
+        初始化CSP实例。
+
+        参数:
+        - variables: 变量列表。
+        - domains: 每个变量的取值域。
+        - constraints: 变量间的约束条件。
+        """
+        self.variables = variables
+        self.domains = domains
+        self.constraints = constraints
+
+    def is_consistent(self, var: Any, value: Any, assignment: Dict[Any, Any]) -> bool:
+        """
+        检查赋值是否一致。
+
+        参数:
+        - var: 变量。
+        - value: 变量的值。
+        - assignment: 当前的赋值。
+
+        返回:
+        - 如果一致返回True，否则返回False。
+        """
+        for (xi, xj) in self.constraints:
+            if xi == var and xj in assignment:
+                if (value, assignment[xj]) not in self.constraints[xi, xj]:
+                    return False
+            if xj == var and xi in assignment:
+                if (assignment[xi], value) not in self.constraints[xi, xj]:
+                    return False
+        return True
+
+    def revise(self, xi: Any, xj: Any) -> bool:
+        """
+        修订变量xi的域，使其与变量xj的一致。
+
+        参数:
+        - xi: 变量xi。
+        - xj: 变量xj。
+
+        返回:
+        - 如果xi的域被修订返回True，否则返回False。
+        """
+        revised = False
+        for x in self.domains[xi]:
+            if all((x, y) not in self.constraints[xi, xj] for y in self.domains[xj]):
+                self.domains[xi].remove(x)
+                revised = True
+        return revised
+
+    def ac3(self) -> bool:
+        """
+        执行AC-3算法，使CSP达到弧一致性。
+
+        返回:
+        - 如果成功返回True，否则返回False。
+        """
+        queue = [(xi, xj) for xi in self.variables for xj in self.variables if xi != xj and (xi, xj) in self.constraints]
+        while queue:
+            (xi, xj) = queue.pop(0)
+            if self.revise(xi, xj):
+                if not self.domains[xi]:
+                    return False
+                for xk in self.variables:
+                    if xk != xi and xk != xj and (xk, xi) in self.constraints:
+                        queue.append((xk, xi))
+        return True
+
+# 示例用法
+if __name__ == "__main__":
+    # 定义变量和域
+    variables = ['A', 'B', 'C']
+    domains = {
+        'A': [1, 2, 3],
+        'B': [1, 2, 3],
+        'C': [1, 2, 3]
+    }
+
+    # 定义约束
+    constraints = {
+        ('A', 'B'): {(1, 2), (2, 3), (3, 1)},
+        ('B', 'A'): {(2, 1), (3, 2), (1, 3)},
+        ('A', 'C'): {(1, 3), (2, 1), (3, 2)},
+        ('C', 'A'): {(3, 1), (1, 2), (2, 3)},
+        ('B', 'C'): {(1, 2), (2, 3), (3, 1)},
+        ('C', 'B'): {(2, 1), (3, 2), (1, 3)}
+    }
+
+    # 创建CSP实例
+    csp = CSP(variables, domains, constraints)
+
+    # 执行AC-3算法
+    if csp.ac3():
+        print("弧一致性已达到")
+        print("修订后的域:", csp.domains)
+    else:
+        print("无法达到弧一致性")
+</code></pre>
+  </div>
+</body>
+</html>
+  

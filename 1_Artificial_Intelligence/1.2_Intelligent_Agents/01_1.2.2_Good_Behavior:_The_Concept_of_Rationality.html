@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <title>1.2.2 Good Behavior: The Concept of Rationality</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
+  <link rel="stylesheet" href="../../markdown.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="../../markdown.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>01_1.2.2_Good_Behavior:_The_Concept_of_Rationality</h1>
+<pre><code>
+Lecture: 1_Artificial_Intelligence/1.2_Intelligent_Agents
+Content: 01_1.2.2_Good_Behavior:_The_Concept_of_Rationality
+
+</code></pre>
+<h3>01_1.2.2 良好行为：理性的概念</h3>
+<h4>引言</h4>
+<p>在人工智能领域，理性（Rationality）是智能体行为的重要标准。一个理性的智能体应当在每个时刻做出“正确”的行动。理解什么是理性，以及如何设计理性智能体，是AI研究的核心内容之一。</p>
+<h4>理性的定义</h4>
+<p>理性智能体是指在任何可能的感知序列下，选择期望最大化其性能测度的行动的智能体。性能测度（Performance Measure）是用于评价智能体在环境中行为的标准。理性的定义依赖于以下四个因素：</p>
+<ol>
+<li><strong>性能测度</strong>：定义成功的标准。</li>
+<li><strong>智能体对环境的先验知识</strong>。</li>
+<li><strong>智能体可以执行的行动</strong>。</li>
+<li><strong>智能体到目前为止的感知序列</strong> 。</li>
+</ol>
+<h4>完美理性与实际理性</h4>
+<p>完美理性（Perfect Rationality）指智能体在每个时刻都能最大化其期望效用。然而，完美理性在大多数环境中是不现实的，因为实现完美理性所需的计算是非常耗时的。因此，完美理性并不是AI设计的实际目标  。</p>
+<h4>计算理性</h4>
+<p>计算理性（Calculative Rationality）是一种智能体最终返回其初始思考时的理性选择的特性。虽然这是一个有趣的特性，但在大多数环境中，正确答案在错误的时间得到是没有价值的。因此，实际AI系统的设计需要在决策质量和整体性能之间进行权衡  。</p>
+<h4>有限理性</h4>
+<p>赫伯特·西蒙（Herbert Simon）提出了有限理性（Bounded Rationality）的概念，这是一种真实智能体的决策理论。西蒙认为，人类心智解决复杂问题的能力远小于现实世界中需要解决的问题的规模。因此，有限理性通过“满意化”来工作，即仅仅进行足够长时间的思考以得出“足够好”的答案。这一理论在解释人类行为方面非常有用，但它并不是智能体的正式规范，因为“足够好”的定义在理论中并未明确给出  。</p>
+<h4>边界最优性</h4>
+<p>边界最优性（Bounded Optimality）是一种智能体在给定计算资源的情况下尽可能表现良好的特性。边界最优智能体程序的期望效用至少与在同一机器上运行的任何其他智能体程序的期望效用一样高。这种方法提供了一个强有力的理论基础，因为总有一个最佳程序，这是完美理性所缺乏的  。</p>
+<h4>理性智能体的行为</h4>
+<p>理性智能体的行为选择不仅依赖于当前的感知序列，还应考虑未来可能的感知变化。因此，理性智能体需要进行信息收集（Information Gathering）和学习（Learning），以便在不完全了解环境的情况下做出最佳决策。例如，一个理性的吸尘器智能体应当在清理房间的过程中不断更新对环境的理解，以优化其清洁策略  。</p>
+<h4>理性与全知</h4>
+<p>需要区分理性和全知（Omniscience）。一个全知的智能体知道其所有行动的实际结果，并能够相应地行动。然而，全知在现实中是不可能的。理性最大化期望性能，而全知最大化实际性能。要求智能体在事后做出最优行动是不现实的，除非我们能够改进水晶球或时间机器的性能  。</p>
+<h4>示例：过马路的理性</h4>
+<p>考虑一个过马路的例子。如果一个人走在香榭丽舍大街上，看到老朋友在街对面，并决定过马路。尽管在过马路的过程中，被一架飞行高度为33000英尺的飞机掉落的货舱门砸到并压扁，这并不意味着他过马路的决定是不理性的。因为理性并不等同于完美，理性最大化期望表现，而完美最大化实际表现  。</p>
+<h4>结论</h4>
+<p>理解理性的概念是设计和评价智能体的核心。理性智能体应在有限资源和信息的情况下，通过信息收集和学习，最大化其性能测度。尽管完美理性不现实，但边界最优性提供了一个强有力的理论基础，有助于设计在实际环境中表现良好的智能体     。</p>
+
+    <h3>Python 文件</h3>
+    <pre><code># 01_1.2.2_Good_Behavior:_The_Concept_of_Rationality
+
+"""
+
+Lecture: 1_Artificial_Intelligence/1.2_Intelligent_Agents
+Content: 01_1.2.2_Good_Behavior:_The_Concept_of_Rationality
+
+"""
+
+</code></pre>
+  </div>
+</body>
+</html>
+  

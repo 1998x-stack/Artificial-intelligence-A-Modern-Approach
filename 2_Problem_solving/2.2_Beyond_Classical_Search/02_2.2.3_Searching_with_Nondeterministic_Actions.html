@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <title>2.2.3 Searching with Nondeterministic Actions</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
+  <link rel="stylesheet" href="../../markdown.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="../../markdown.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>02_2.2.3_Searching_with_Nondeterministic_Actions</h1>
+<pre><code>
+Lecture: 2_Problem-solving/2.2_Beyond_Classical_Search
+Content: 02_2.2.3_Searching_with_Nondeterministic_Actions
+
+</code></pre>
+<h3>4.3 在非确定性操作中的搜索</h3>
+<p>在第四章的部分内容中，我们详细探讨了在非确定性操作中进行搜索的方法。这部分内容涉及到环境的不确定性和感知信息的利用，具体来说包括几个关键点：</p>
+<h4>1. 引言</h4>
+<p>在第三章中，我们假设环境是完全可观察和确定性的，代理人能够准确预测每个动作的效果。然而，当环境是部分可观察或非确定性时，感知变得尤为重要。代理人的感知帮助其缩小可能的状态集合，从而更容易实现目标 。</p>
+<h4>2. 非确定性吸尘器世界</h4>
+<p>以吸尘器世界为例，该世界在引入非确定性后变得更为复杂。例如，吸尘器在清洁一个脏格子时，可能会同时清洁相邻的格子，或者在清洁干净的格子时，可能会意外地弄脏地毯 。</p>
+<p>为了精确描述这一问题，我们需要扩展第三章中的转换模型（transition model）。不再是返回单一状态的RESULT函数，而是返回一组可能结果状态的RESULTS函数。例如，在非确定性吸尘器世界中，吸在状态1时可能会导致状态集合{5, 7} 。</p>
+<h4>3. 解决方案</h4>
+<p>在这种情况下，解决方案需要包含嵌套的if-then-else语句，意味着解决方案是树而不是序列。这允许代理人在执行过程中根据实际情况选择动作。许多实际问题都是应急问题，因为无法准确预测结果，因此人们在走路或驾驶时需要保持注意力 。</p>
+<h4>4. AND-OR 搜索树</h4>
+<p>如何找到非确定性问题的应急解决方案？我们通过构建搜索树来解决这个问题。在确定性环境中，唯一的分支是代理人在每个状态中的选择，我们称这些节点为OR节点。在非确定性环境中，环境对每个动作的选择结果也引入了分支，我们称这些节点为AND节点 。</p>
+<p>解决AND-OR搜索问题的方案是一棵子树，要求每个叶节点都是目标节点，每个OR节点指定一个动作，每个AND节点包含每个结果分支 。</p>
+<h4>5. 重试</h4>
+<p>考虑滑动吸尘器世界，该世界与普通吸尘器世界类似，只是移动动作有时会失败，使代理人保持在原地。例如，从状态1向右移动可能会导致状态集合{1, 2}。解决这个问题的方案是保持尝试右移直到成功。我们可以通过添加标签来表达这个循环方案，比如“[吸, L1: 右, 如果状态=5 则 L1 否则 吸]”。总的来说，只要每个叶节点都是目标状态，并且每个点都可以到达叶节点，就可以认为循环方案是解决方案 。</p>
+<h3>总结</h3>
+<p>在非确定性操作中进行搜索时，感知信息至关重要。代理人需要根据当前状态的可能结果和感知信息来动态调整其行动策略。AND-OR搜索树提供了一种结构化的方法来处理这种复杂的决策过程，使代理人能够在不确定的环境中有效地实现其目标。</p>
+
+    <h3>Python 文件</h3>
+    <pre><code># 02_2.2.3_Searching_with_Nondeterministic_Actions
+
+"""
+
+Lecture: 2_Problem-solving/2.2_Beyond_Classical_Search
+Content: 02_2.2.3_Searching_with_Nondeterministic_Actions
+
+"""
+
+import numpy as np
+from typing import Callable, List, Tuple, Dict, Any
+
+class NondeterministicSearch:
+    """
+    在非确定性操作中进行搜索的基类。
+    """
+    def __init__(self, initial_state: Any, goal_test: Callable[[Any], bool], actions: Callable[[Any], List[Callable[[Any], Any]]]):
+        """
+        初始化非确定性搜索。
+
+        参数:
+        - initial_state (Any): 初始状态。
+        - goal_test (Callable[[Any], bool]): 测试目标状态的函数。
+        - actions (Callable[[Any], List[Callable[[Any], Any]]]): 获取可用操作的函数。
+        """
+        self.initial_state = initial_state
+        self.goal_test = goal_test
+        self.actions = actions
+
+    def results(self, state: Any, action: Callable[[Any], Any]) -> List[Any]:
+        """
+        获取给定状态和操作的所有可能结果。
+
+        参数:
+        - state (Any): 当前状态。
+        - action (Callable[[Any], Any]): 施加于状态的操作。
+
+        返回:
+        - List[Any]: 所有可能的结果状态。
+        """
+        raise NotImplementedError("子类应该实现 results 方法。")
+
+    def and_or_graph_search(self) -> Tuple[bool, List[Any]]:
+        """
+        执行AND-OR图搜索以找到解决方案。
+
+        返回:
+        - Tuple[bool, List[Any]]: 是否找到解决方案以及解决方案路径。
+        """
+        def or_search(state: Any, path: List[Any]) -> Tuple[bool, List[Any]]:
+            if self.goal_test(state):
+                return True, path
+            if state in path:
+                return False, []
+
+            for action in self.actions(state):
+                plan = [(action, and_search(result, path + [state])) for result in self.results(state, action)]
+                if all(sub_plan[0] for _, sub_plan in plan):
+                    return True, [action] + [sub_plan[1] for _, sub_plan in plan]
+            return False, []
+
+        def and_search(states: List[Any], path: List[Any]) -> Tuple[bool, List[Any]]:
+            results = []
+            for state in states:
+                success, plan = or_search(state, path)
+                if not success:
+                    return False, []
+                results.append(plan)
+            return True, results
+
+        return or_search(self.initial_state, [])
+
+class VacuumWorld(NondeterministicSearch):
+    """
+    非确定性吸尘器世界。
+    """
+    def __init__(self, initial_state: Tuple[str, Tuple[bool, bool]], goal_test: Callable[[Any], bool]):
+        """
+        初始化非确定性吸尘器世界。
+
+        参数:
+        - initial_state (Tuple[str, Tuple[bool, bool]]): 初始状态。
+        - goal_test (Callable[[Any], bool]): 测试目标状态的函数。
+        """
+        def actions(state: Tuple[str, Tuple[bool, bool]]) -> List[Callable[[Any], Any]]:
+            return [self.suck, self.move_left, self.move_right]
+
+        super().__init__(initial_state, goal_test, actions)
+
+    def results(self, state: Tuple[str, Tuple[bool, bool]], action: Callable[[Any], Any]) -> List[Tuple[str, Tuple[bool, bool]]]:
+        """
+        获取给定状态和操作的所有可能结果。
+
+        参数:
+        - state (Tuple[str, Tuple[bool, bool]]): 当前状态。
+        - action (Callable[[Any], Any]): 施加于状态的操作。
+
+        返回:
+        - List[Tuple[str, Tuple[bool, bool]]]: 所有可能的结果状态。
+        """
+        # 模拟非确定性操作的结果
+        np.random.seed(42)  # 为了结果可重复
+        if action == self.suck:
+            if state[0] == 'A':
+                return [('A', (False, state[1])), ('A', (False, not state[1]))]
+            else:
+                return [('B', (state[1], False)), ('B', (not state[1], False))]
+        elif action == self.move_left:
+            if state[0] == 'B':
+                return [('A', state[1])]
+            else:
+                return [('A', state[1]), ('A', state[1])]
+        elif action == self.move_right:
+            if state[0] == 'A':
+                return [('B', state[1])]
+            else:
+                return [('B', state[1]), ('B', state[1])]
+
+    def suck(self, state: Tuple[str, Tuple[bool, bool]]) -> Tuple[str, Tuple[bool, bool]]:
+        """
+        吸尘操作。
+
+        参数:
+        - state (Tuple[str, Tuple[bool, bool]]): 当前状态。
+
+        返回:
+        - Tuple[str, Tuple[bool, bool]]: 吸尘后的新状态。
+        """
+        return state
+
+    def move_left(self, state: Tuple[str, Tuple[bool, bool]]) -> Tuple[str, Tuple[bool, bool]]:
+        """
+        向左移动操作。
+
+        参数:
+        - state (Tuple[str, Tuple[bool, bool]]): 当前状态。
+
+        返回:
+        - Tuple[str, Tuple[bool, bool]]: 向左移动后的新状态。
+        """
+        return state
+
+    def move_right(self, state: Tuple[str, Tuple[bool, bool]]) -> Tuple[str, Tuple[bool, bool]]:
+        """
+        向右移动操作。
+
+        参数:
+        - state (Tuple[str, Tuple[bool, bool]]): 当前状态。
+
+        返回:
+        - Tuple[str, Tuple[bool, bool]]: 向右移动后的新状态。
+        """
+        return state
+
+# 示例用法：
+if __name__ == "__main__":
+    # 定义吸尘器世界的初始状态和目标测试函数
+    initial_state = ('A', (True, True))  # 初始状态：位置A，两个格子都脏
+    goal_test = lambda state: not state[1][0] and not state[1][1]
+
+    # 创建非确定性吸尘器世界
+    vacuum_world = VacuumWorld(initial_state, goal_test)
+
+    # 执行AND-OR图搜索
+    solution_found, solution_path = vacuum_world.and_or_graph_search()
+    if solution_found:
+        print("找到解决方案:", solution_path)
+    else:
+        print("未找到解决方案。")
+</code></pre>
+  </div>
+</body>
+</html>
+  

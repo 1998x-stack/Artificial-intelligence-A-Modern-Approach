@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <title>2.3.6 Partially Observable Games</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
+  <link rel="stylesheet" href="../../markdown.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="../../markdown.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>05_2.3.6_Partially_Observable_Games</h1>
+<pre><code>
+Lecture: 2_Problem-solving/2.3_Adversarial_Search
+Content: 05_2.3.6_Partially_Observable_Games
+
+</code></pre>
+<h3>2.3.6 部分可观测博弈</h3>
+<p>在本节中，我们深入探讨了部分可观测博弈（Partially Observable Games）的概念及其应用。部分可观测博弈是指在博弈过程中，玩家无法完全观测到所有信息，而只能获得部分信息或不完全信息。这类博弈在很多实际问题中都有广泛的应用，例如扑克游戏、军事决策和金融市场中的投资决策等。以下是对这一章的详细分析：</p>
+<h4>1. 引言</h4>
+<p>部分可观测博弈是一类包含不完全信息的博弈，其中每个玩家只能基于部分可见的状态信息进行决策。这种博弈模型在处理不确定性和信息不对称的环境中尤为重要。经典的完全信息博弈模型无法处理信息不对称的问题，而部分可观测博弈提供了一个框架来解决这些问题。</p>
+<h4>2. 部分可观测马尔可夫决策过程（POMDP）</h4>
+<p>部分可观测博弈的一个典型模型是部分可观测马尔可夫决策过程（POMDP）。POMDP 由以下元素构成：</p>
+<ul>
+<li><strong>状态集合（S）</strong>：所有可能的状态。</li>
+<li><strong>动作集合（A）</strong>：所有可能的动作。</li>
+<li><strong>观察集合（O）</strong>：所有可能的观察值。</li>
+<li><strong>状态转移概率（P）</strong>：状态转移的概率，P(s'|s, a) 表示在状态 s 采取动作 a 转移到状态 s' 的概率。</li>
+<li><strong>观察概率（Z）</strong>：观察的概率，Z(o|s', a) 表示在状态 s' 采取动作 a 后观察到 o 的概率。</li>
+<li><strong>奖励函数（R）</strong>：R(s, a) 表示在状态 s 采取动作 a 所获得的即时奖励。</li>
+</ul>
+<p>POMDP 的目标是找到一个策略 π，使得从任意初始状态开始，期望总收益最大化。由于玩家无法完全观测到状态，需要通过观测序列来更新对当前状态的信念（即信念状态）。</p>
+<h4>3. 信念状态更新</h4>
+<p>在部分可观测博弈中，信念状态（Belief State）表示玩家对当前真实状态的概率分布。在执行动作和观察到新的信息后，玩家需要更新其信念状态。更新过程如下：</p>
+<ul>
+<li><strong>预测步骤</strong>：根据当前信念状态和执行的动作，预测下一个状态的信念状态。</li>
+<li><strong>更新步骤</strong>：根据预测的信念状态和实际观察到的信息，更新信念状态。</li>
+</ul>
+<p>更新公式为：
+$$ b'(s') = \eta Z(o|s', a) \sum_{s \in S} P(s'|s, a) b(s) $$
+其中，$ b $ 是当前信念状态，$ b' $ 是更新后的信念状态，$ \eta $ 是归一化因子。</p>
+<h4>4. 策略评估与改进</h4>
+<p>在部分可观测博弈中，策略的评估和改进是关键步骤。常用的方法包括：</p>
+<ul>
+<li><strong>值迭代（Value Iteration）</strong>：在信念状态空间上进行值迭代，计算最优值函数。</li>
+<li><strong>策略迭代（Policy Iteration）</strong>：基于当前策略的值函数，改进策略以提高期望收益。</li>
+</ul>
+<p>由于信念状态空间通常是连续的，需要使用近似方法来进行计算，如点基方法和蒙特卡罗方法。</p>
+<h4>5. 扑克中的部分可观测博弈</h4>
+<p>扑克是部分可观测博弈的一个经典例子。玩家只能看到自己的手牌和公共牌，而无法看到对手的手牌。每个玩家需要根据部分信息进行推理和决策，以最大化自己的收益。常用的方法包括：</p>
+<ul>
+<li><strong>对手建模</strong>：通过观察对手的行为，推测对手的手牌范围和策略。</li>
+<li><strong>概率推理</strong>：基于已知信息和概率模型，计算不同动作的期望收益。</li>
+</ul>
+<h4>6. 应用实例</h4>
+<p>部分可观测博弈在许多实际应用中具有重要意义。例如：</p>
+<ul>
+<li><strong>军事决策</strong>：在不完全掌握敌方情报的情况下，需要制定最佳的作战策略。</li>
+<li><strong>金融投资</strong>：投资者在不完全掌握市场信息的情况下，需要根据部分信息进行投资决策，以优化收益。</li>
+<li><strong>医疗诊断</strong>：医生在不完全掌握患者全部病情的情况下，需要根据部分检查结果进行诊断和治疗决策。</li>
+</ul>
+<h3>总结</h3>
+<p>部分可观测博弈提供了处理信息不对称和不确定性环境中决策问题的有效框架。通过POMDP、信念状态更新、值迭代和策略迭代等方法，研究者能够在不完全信息的环境中找到最优策略。这些方法在实际应用中展现出巨大的潜力，为解决复杂的现实问题提供了有效的工具。</p>
+
+    <h3>Python 文件</h3>
+    <pre><code># 05_2.3.6_Partially_Observable_Games
+
+"""
+
+Lecture: 2_Problem-solving/2.3_Adversarial_Search
+Content: 05_2.3.6_Partially_Observable_Games
+
+"""
+
+</code></pre>
+  </div>
+</body>
+</html>
+  

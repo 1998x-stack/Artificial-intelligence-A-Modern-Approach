@@ -1,0 +1,310 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <title>2.1.2 Example Problems</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
+  <link rel="stylesheet" href="../../markdown.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="../../markdown.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>01_2.1.2_Example_Problems</h1>
+<pre><code>
+Lecture: 2_Problem-solving/2.1_Solving_Problems_by_Searching
+Content: 01_2.1.2_Example_Problems
+
+</code></pre>
+<h3>2.1.2 示例问题</h3>
+<h4>1. 引言</h4>
+<p>在人工智能和机器学习中，求解问题是一个关键领域。通过搜索来解决问题是这些技术的基础之一。在这一部分，我们将探讨一些示例问题，并分析如何通过不同的搜索策略来解决这些问题。这不仅能帮助我们理解搜索算法的基本原理，还能为实际应用提供有价值的见解。</p>
+<h4>2. 问题分类</h4>
+<p>在研究示例问题时，重要的是要了解不同类型的问题及其特性。一般来说，问题可以分为以下几类：</p>
+<ol>
+<li><strong>单一目标问题</strong>：这些问题通常有明确的目标状态。例如，迷宫问题的目标是找到从起点到终点的路径。</li>
+<li><strong>多目标问题</strong>：这些问题涉及多个目标，需要在不同的目标之间进行权衡。例如，物流优化问题需要在成本和时间之间找到平衡点。</li>
+<li><strong>约束满足问题</strong>：这些问题要求解必须满足一定的约束条件。例如，数独游戏要求每行、每列和每个子区域的数字不能重复。</li>
+</ol>
+<h4>3. 示例问题分析</h4>
+<h5>3.1 八数码问题</h5>
+<p><strong>问题描述</strong>：八数码问题是一个经典的组合优化问题。它涉及一个 3x3 的网格，其中包含数字 1 到 8 和一个空格。目标是通过移动数字使得最终状态成为按顺序排列的形式。</p>
+<p><strong>解法</strong>：</p>
+<ol>
+<li><strong>广度优先搜索（BFS）</strong>：从初始状态开始，逐层扩展所有可能的状态，直到找到目标状态。这种方法保证找到最短路径，但需要大量的存储空间。</li>
+<li><strong>深度优先搜索（DFS）</strong>：从初始状态开始，深入探索每一条可能的路径，直到找到目标状态。这种方法的存储空间需求较小，但不保证找到最短路径。</li>
+<li><strong>启发式搜索（如A*算法）</strong>：结合当前状态到目标状态的估计成本，选择最有可能的路径进行扩展。A*算法结合了DFS和BFS的优点，既能保证找到最短路径，又能有效利用存储空间。</li>
+</ol>
+<h5>3.2 旅行商问题（TSP）</h5>
+<p><strong>问题描述</strong>：旅行商问题要求找到一条经过所有给定城市的最短路径，并返回起始城市。该问题属于NP难问题，其复杂性随城市数量的增加呈指数增长。</p>
+<p><strong>解法</strong>：</p>
+<ol>
+<li><strong>贪心算法</strong>：每一步选择距离最近的未访问城市。这种方法简单但不能保证找到最优解。</li>
+<li><strong>动态规划</strong>：通过记录子问题的最优解，逐步构建全局最优解。虽然可以找到最优解，但计算量和存储需求较大。</li>
+<li><strong>遗传算法</strong>：利用生物进化的思想，通过选择、交叉和变异操作，逐步逼近最优解。遗传算法在处理大规模TSP问题时表现良好，但解的质量依赖于参数的选择。</li>
+</ol>
+<h5>3.3 数独</h5>
+<p><strong>问题描述</strong>：数独是一种逻辑填字游戏，要求在9x9的网格中填入1到9的数字，使得每行、每列和每个3x3的子区域中数字不重复。</p>
+<p><strong>解法</strong>：</p>
+<ol>
+<li><strong>回溯算法</strong>：逐步填入数字，并在遇到冲突时回退。回溯算法简单直观，但在搜索空间较大时效率较低。</li>
+<li><strong>约束传播</strong>：在每一步填数之前，通过约束传播缩小候选数字的范围。这种方法可以显著减少搜索空间，提高求解效率。</li>
+<li><strong>混合算法</strong>：结合回溯和约束传播的方法，利用两者的优点，提高求解速度和效率。</li>
+</ol>
+<h4>4. 总结</h4>
+<p>通过分析以上示例问题，我们可以看到不同类型问题的特性和相应的解法。对于每种问题，选择合适的搜索策略至关重要。通过不断优化搜索算法，我们可以在实际应用中更高效地解决复杂问题。这不仅有助于提高计算效率，还能为其他领域的研究提供有价值的参考。</p>
+
+    <h3>Python 文件</h3>
+    <pre><code># 01_2.1.2_Example_Problems
+
+"""
+
+Lecture: 2_Problem-solving/2.1_Solving_Problems_by_Searching
+Content: 01_2.1.2_Example_Problems
+
+"""
+
+import numpy as np
+from collections import deque
+from typing import List, Tuple
+
+class EightPuzzleSolver:
+    def __init__(self, initial_state: List[List[int]], goal_state: List[List[int]]):
+        """
+        初始化八数码问题求解器。
+
+        Args:
+        - initial_state (List[List[int]]): 初始状态的 3x3 网格。
+        - goal_state (List[List[int]]): 目标状态的 3x3 网格。
+        """
+        self.initial_state = np.array(initial_state)
+        self.goal_state = np.array(goal_state)
+        self.n = self.initial_state.shape[0]
+
+    def is_solvable(self, state: np.ndarray) -> bool:
+        """
+        检查给定状态是否可解。
+
+        Args:
+        - state (np.ndarray): 需要检查的状态。
+
+        Returns:
+        - bool: 状态是否可解。
+        """
+        flattened = state.flatten()
+        inv_count = sum(
+            1 for i in range(len(flattened) - 1) for j in range(i + 1, len(flattened))
+            if flattened[i] and flattened[j] and flattened[i] > flattened[j]
+        )
+        return inv_count % 2 == 0
+
+    def bfs(self) -> List[np.ndarray]:
+        """
+        使用广度优先搜索（BFS）求解八数码问题。
+
+        Returns:
+        - List[np.ndarray]: 从初始状态到目标状态的状态序列。
+        """
+        if not self.is_solvable(self.initial_state):
+            print("此初始状态不可解。")
+            return []
+
+        moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        visited = set()
+        queue = deque([(self.initial_state, [])])
+        visited.add(tuple(self.initial_state.flatten()))
+
+        while queue:
+            state, path = queue.popleft()
+            if np.array_equal(state, self.goal_state):
+                return path + [state]
+
+            zero_pos = tuple(np.argwhere(state == 0)[0])
+            for move in moves:
+                new_pos = (zero_pos[0] + move[0], zero_pos[1] + move[1])
+                if 0 <= new_pos[0] < self.n and 0 <= new_pos[1] < self.n:
+                    new_state = state.copy()
+                    new_state[zero_pos], new_state[new_pos] = new_state[new_pos], new_state[zero_pos]
+                    if tuple(new_state.flatten()) not in visited:
+                        visited.add(tuple(new_state.flatten()))
+                        queue.append((new_state, path + [state]))
+
+        return []
+
+# 示例用法
+initial_state = [
+    [1, 2, 3],
+    [4, 0, 5],
+    [7, 8, 6]
+]
+
+goal_state = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 0]
+]
+
+solver = EightPuzzleSolver(initial_state, goal_state)
+solution_path = solver.bfs()
+
+for step in solution_path:
+    print(step)
+
+
+import numpy as np
+from itertools import permutations
+from typing import List, Tuple
+
+class TSPSolver:
+    def __init__(self, distance_matrix: np.ndarray):
+        """
+        初始化旅行商问题求解器。
+
+        Args:
+        - distance_matrix (np.ndarray): 城市间的距离矩阵。
+        """
+        self.distance_matrix = distance_matrix
+        self.n = distance_matrix.shape[0]
+
+    def solve_brute_force(self) -> Tuple[float, List[int]]:
+        """
+        使用蛮力法求解旅行商问题。
+
+        Returns:
+        - Tuple[float, List[int]]: 最短路径的长度和城市访问顺序。
+        """
+        min_path_length = np.inf
+        best_path = []
+
+        for perm in permutations(range(self.n)):
+            current_length = sum(
+                self.distance_matrix[perm[i], perm[i + 1]] for i in range(self.n - 1)
+            )
+            current_length += self.distance_matrix[perm[-1], perm[0]]
+
+            if current_length < min_path_length:
+                min_path_length = current_length
+                best_path = perm
+
+        return min_path_length, list(best_path)
+
+# 示例用法
+distance_matrix = np.array([
+    [0, 10, 15, 20],
+    [10, 0, 35, 25],
+    [15, 35, 0, 30],
+    [20, 25, 30, 0]
+])
+
+tsp_solver = TSPSolver(distance_matrix)
+min_length, best_path = tsp_solver.solve_brute_force()
+
+print(f"最短路径长度: {min_length}")
+print(f"最佳路径顺序: {best_path}")
+
+
+import numpy as np
+from typing import List, Tuple, Optional
+
+class SudokuSolver:
+    def __init__(self, board: List[List[int]]):
+        """
+        初始化数独求解器。
+
+        Args:
+        - board (List[List[int]]): 数独棋盘。
+        """
+        self.board = np.array(board)
+        self.n = self.board.shape[0]
+
+    def is_valid(self, num: int, pos: Tuple[int, int]) -> bool:
+        """
+        检查在给定位置填入数字是否有效。
+
+        Args:
+        - num (int): 要填入的数字。
+        - pos (Tuple[int, int]): 填入的位置 (行, 列)。
+
+        Returns:
+        - bool: 填入数字是否有效。
+        """
+        row, col = pos
+
+        if num in self.board[row, :]:
+            return False
+
+        if num in self.board[:, col]:
+            return False
+
+        box_x, box_y = row // 3, col // 3
+        if num in self.board[box_x * 3:(box_x + 1) * 3, box_y * 3:(box_y + 1) * 3]:
+            return False
+
+        return True
+
+    def find_empty(self) -> Optional[Tuple[int, int]]:
+        """
+        找到棋盘上的空位置。
+
+        Returns:
+        - Optional[Tuple[int, int]]: 空位置的坐标 (行, 列)，如果没有空位置则返回 None。
+        """
+        for i in range(self.n):
+            for j in range(self.n):
+                if self.board[i, j] == 0:
+                    return i, j
+        return None
+
+    def solve(self) -> bool:
+        """
+        使用回溯算法求解数独问题。
+
+        Returns:
+        - bool: 是否找到解。
+        """
+        empty_pos = self.find_empty()
+        if not empty_pos:
+            return True
+
+        row, col = empty_pos
+        for num in range(1, 10):
+            if self.is_valid(num, empty_pos):
+                self.board[row, col] = num
+
+                if self.solve():
+                    return True
+
+                self.board[row, col] = 0
+
+        return False
+
+# 示例用法
+board = [
+    [5, 3, 0, 0, 7, 0, 0, 0, 0],
+    [6, 0, 0, 1, 9, 5, 0, 0, 0],
+    [0, 9, 8, 0, 0, 0, 0, 6, 0],
+    [8, 0, 0, 0, 6, 0, 0, 0, 3],
+    [4, 0, 0, 8, 0, 3, 0, 0, 1],
+    [7, 0, 0, 0, 2, 0, 0, 0, 6],
+    [0, 6, 0, 0, 0, 0, 2, 8, 0],
+    [0, 0, 0, 4, 1, 9, 0, 0, 5],
+    [0, 0, 0, 0, 8, 0, 0, 7, 9]
+]
+
+sudoku_solver = SudokuSolver(board)
+if sudoku_solver.solve():
+    print("数独解:")
+    print(sudoku_solver.board)
+else:
+    print("无解")
+</code></pre>
+  </div>
+</body>
+</html>
+  

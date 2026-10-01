@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <title>2.1.5 Informed (Heuristic) Search Strategies</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
+  <link rel="stylesheet" href="../../markdown.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="../../markdown.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>04_2.1.5_Informed_(Heuristic)_Search_Strategies</h1>
+<pre><code>
+Lecture: 2_Problem-solving/2.1_Solving_Problems_by_Searching
+Content: 04_2.1.5_Informed_(Heuristic)_Search_Strategies
+
+</code></pre>
+<h3>2.1.5 启发式搜索策略</h3>
+<h4>1. 引言</h4>
+<p>启发式搜索策略（Heuristic Search Strategies）在搜索过程中使用启发式函数来引导搜索方向，从而提高搜索效率。这些策略利用额外的信息或启发来减少搜索空间，加快找到解决方案的速度。常见的启发式搜索算法包括贪心搜索（Greedy Search）、A*算法和启发式深度优先搜索等。</p>
+<h4>2. 启发式搜索的基本概念</h4>
+<p>启发式搜索通过利用启发函数 $h(n)$ 来估计当前节点 $n$ 到目标节点的代价。启发式函数是搜索策略的核心，它决定了搜索过程的效率和准确性。理想的启发函数应该是：</p>
+<ul>
+<li><strong>可计算的</strong>：在合理的时间内计算出启发值。</li>
+<li><strong>有信息量的</strong>：提供对实际代价的良好估计。</li>
+<li><strong>符合一致性（单调性）</strong>：如果对于每个节点 $n$，启发函数满足 $h(n) \leq c(n, n') + h(n')$，其中 $c(n, n')$ 是节点 $n$ 到 $n'$ 的实际代价，则启发函数是一致的。</li>
+</ul>
+<h4>3. 贪心搜索（Greedy Search）</h4>
+<h5>3.1 基本原理</h5>
+<p>贪心搜索在每一步都选择启发函数值最小的节点进行扩展，以期最快到达目标节点。该算法不考虑路径的实际代价，仅依据启发值进行决策。</p>
+<h5>3.2 算法步骤</h5>
+<ol>
+<li>初始化：将起始节点放入优先队列，按启发值排序。</li>
+<li>迭代：从优先队列中取出启发值最小的节点，检查是否为目标节点。如果是，则结束搜索并返回路径；否则，将该节点的所有未访问的邻居节点加入队列，并按启发值重新排序。</li>
+<li>重复迭代步骤，直到找到目标节点或队列为空。</li>
+</ol>
+<h5>3.3 优缺点</h5>
+<ul>
+<li><strong>优点</strong>：搜索速度快，适用于寻找较优解。</li>
+<li><strong>缺点</strong>：不能保证找到最优解，可能会陷入局部最优。</li>
+</ul>
+<h5>3.4 应用场景</h5>
+<ul>
+<li>路径规划</li>
+<li>快速求解问题</li>
+</ul>
+<h4>4. A*算法</h4>
+<h5>4.1 基本原理</h5>
+<p>A<em>算法结合了实际代价和启发值，其评价函数为 $f(n) = g(n) + h(n)$，其中 $g(n)$ 是从起点到当前节点的实际代价，$h(n)$ 是从当前节点到目标节点的估计代价。A</em>算法在每一步选择评价函数值最小的节点进行扩展。</p>
+<h5>4.2 算法步骤</h5>
+<ol>
+<li>初始化：将起始节点放入优先队列，按评价函数值排序。</li>
+<li>迭代：从优先队列中取出评价函数值最小的节点，检查是否为目标节点。如果是，则结束搜索并返回路径；否则，将该节点的所有未访问的邻居节点加入队列，并按评价函数值重新排序。</li>
+<li>重复迭代步骤，直到找到目标节点或队列为空。</li>
+</ol>
+<h5>4.3 优缺点</h5>
+<ul>
+<li><strong>优点</strong>：高效且能保证找到最优解（如果启发函数是一致的）。</li>
+<li><strong>缺点</strong>：需要大量内存存储所有节点。</li>
+</ul>
+<h5>4.4 应用场景</h5>
+<ul>
+<li>路径规划</li>
+<li>拼图问题求解</li>
+</ul>
+<h4>5. 启发式深度优先搜索</h4>
+<h5>5.1 基本原理</h5>
+<p>启发式深度优先搜索结合了启发信息和深度优先搜索，沿着启发值较低的路径进行深入搜索，直至找到目标节点或达到最大深度。</p>
+<h5>5.2 算法步骤</h5>
+<ol>
+<li>初始化：将起始节点放入栈，并按启发值排序。</li>
+<li>迭代：从栈中取出启发值最小的节点，检查是否为目标节点。如果是，则结束搜索并返回路径；否则，将该节点的所有未访问的邻居节点按启发值加入栈中。</li>
+<li>重复迭代步骤，直到找到目标节点或栈为空。</li>
+</ol>
+<h5>5.3 优缺点</h5>
+<ul>
+<li><strong>优点</strong>：内存需求低，适用于大规模问题。</li>
+<li><strong>缺点</strong>：不能保证找到最优解，可能陷入无限循环。</li>
+</ul>
+<h5>5.4 应用场景</h5>
+<ul>
+<li>大规模问题的解决</li>
+<li>需要结合启发信息的问题</li>
+</ul>
+<h4>6. 总结</h4>
+<p>启发式搜索策略通过利用启发信息提高搜索效率，在解决复杂问题时非常有效。选择合适的启发式搜索算法取决于问题的特性和启发函数的设计。启发式搜索在路径规划、拼图问题等领域具有广泛应用 。</p>
+<h3>详细比较表</h3>
+<table>
+<thead>
+<tr>
+<th><strong>搜索策略</strong></th>
+<th><strong>基本原理</strong></th>
+<th><strong>优点</strong></th>
+<th><strong>缺点</strong></th>
+<th><strong>适用场景</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>贪心搜索 (Greedy Search)</strong></td>
+<td>每一步选择启发值最小的节点进行扩展。</td>
+<td>搜索速度快。</td>
+<td>不能保证找到最优解，可能会陷入局部最优。</td>
+<td>路径规划、快速求解问题。</td>
+</tr>
+<tr>
+<td><strong>A*算法</strong></td>
+<td>结合实际代价和启发值，选择评价函数 $f(n) = g(n) + h(n)$ 值最小的节点进行扩展。</td>
+<td>高效且能保证找到最优解（如果启发函数一致）。</td>
+<td>需要大量内存存储所有节点。</td>
+<td>路径规划、拼图问题求解。</td>
+</tr>
+<tr>
+<td><strong>启发式深度优先搜索</strong></td>
+<td>结合启发信息和深度优先搜索，沿着启发值较低的路径进行深入搜索。</td>
+<td>内存需求低，适用于大规模问题。</td>
+<td>不能保证找到最优解，可能陷入无限循环。</td>
+<td>大规模问题的解决，结合启发信息的问题。</td>
+</tr>
+</tbody>
+</table>
+
+    <h3>Python 文件</h3>
+    <pre><code># 04_2.1.5_Informed_(Heuristic)_Search_Strategies
+
+"""
+
+Lecture: 2_Problem-solving/2.1_Solving_Problems_by_Searching
+Content: 04_2.1.5_Informed_(Heuristic)_Search_Strategies
+
+"""
+
+</code></pre>
+  </div>
+</body>
+</html>
+  

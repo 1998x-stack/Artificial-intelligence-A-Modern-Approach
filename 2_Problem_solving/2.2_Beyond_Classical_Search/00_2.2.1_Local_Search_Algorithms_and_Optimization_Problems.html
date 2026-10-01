@@ -1,0 +1,380 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <title>2.2.1 Local Search Algorithms and Optimization Problems</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
+  <link rel="stylesheet" href="../../markdown.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="../../markdown.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>00_2.2.1_Local_Search_Algorithms_and_Optimization_Problems</h1>
+<pre><code>
+Lecture: 2_Problem-solving/2.2_Beyond_Classical_Search
+Content: 00_2.2.1_Local_Search_Algorithms_and_Optimization_Problems
+
+</code></pre>
+<h2>4.1 本地搜索算法与优化问题</h2>
+<p>本节探讨了传统搜索算法以外的另一类搜索算法，即本地搜索算法。这些算法主要用于解决那些路径本身并不重要，而仅仅关注最终状态的问题。以下是本地搜索算法及其应用的详细分析：</p>
+<h3>4.1.1 爬山法搜索</h3>
+<p>爬山法（Hill Climbing）是一种基本的本地搜索技术，其基本思想是从一个初始状态出发，不断向邻近状态移动，使目标函数值逐步增加，直至达到局部最大值。其算法如下图所示：</p>
+<pre><code>function HILL-CLIMBING(problem) returns a state that is a local maximum
+  current←MAKE-NODE(problem .INITIAL-STATE)
+  loop do
+    neighbor ← a highest-valued successor of current
+    if neighbor.VALUE ≤ current.VALUE then return current .STATE
+    current←neighbor
+</code></pre>
+<h4>优点</h4>
+<ol>
+<li><strong>内存消耗低</strong>：爬山法只需要存储当前节点，因此内存占用极少。</li>
+<li><strong>适用于大规模或无限状态空间</strong>：在大规模或连续状态空间中，爬山法能够快速找到合理的解。</li>
+</ol>
+<h4>缺点</h4>
+<ol>
+<li><strong>局部最大值</strong>：算法可能会陷入局部最大值而无法继续前进。</li>
+<li><strong>山脊效应</strong>：在状态空间中，算法可能难以跨越山脊。</li>
+<li><strong>高原效应</strong>：算法可能会在高原区域停滞不前，难以找到最优解。</li>
+</ol>
+<h3>4.1.2 模拟退火</h3>
+<p>模拟退火（Simulated Annealing）是一种基于统计物理的随机搜索算法，它通过允许一定概率的“退步”来避免陷入局部最优。模拟退火的核心思想是模拟物理退火过程，通过逐渐降低“温度”来达到全局最优状态。其算法如下图所示：</p>
+<pre><code>function SIMULATED-ANNEALING(problem , schedule) returns a solution state
+  current←MAKE-NODE(problem .INITIAL-STATE)
+  for t = 1 to ∞ do
+    T ← schedule(t)
+    if T = 0 then return current
+    next← a randomly selected successor of current
+    ΔE ←next .VALUE – current .VALUE
+    if ΔE &gt; 0 then current←next
+    else current←next only with probability e^ΔE/T
+</code></pre>
+<h3>4.1.3 局部光束搜索</h3>
+<p>局部光束搜索（Local Beam Search）保留k个状态，并在每一步生成所有k个状态的所有后继状态，选择k个最佳状态继续搜索。与多次随机重启爬山法不同，局部光束搜索允许并行搜索之间传递有用信息，从而提高搜索效率。其算法特点如下：</p>
+<ol>
+<li><strong>保留多个状态</strong>：在内存允许的情况下，同时保留多个状态进行搜索。</li>
+<li><strong>信息共享</strong>：状态间的信息共享使得算法能快速集中资源于更有希望的搜索路径。</li>
+</ol>
+<h3>4.1.4 遗传算法</h3>
+<p>遗传算法（Genetic Algorithm, GA）是一种模拟自然选择和遗传机制的搜索算法，通过选择、交叉和变异操作生成新的状态。其步骤如下：</p>
+<ol>
+<li><strong>初始化种群</strong>：随机生成一组初始状态。</li>
+<li><strong>适应度评估</strong>：计算每个状态的适应度值。</li>
+<li><strong>选择</strong>：根据适应度值选择下一代的父母。</li>
+<li><strong>交叉</strong>：通过交叉操作生成新的状态。</li>
+<li><strong>变异</strong>：对新状态进行变异操作以引入多样性。</li>
+</ol>
+<p>遗传算法通常用于复杂的优化问题，其优点是能够在大规模状态空间中找到全局最优或近似最优解。</p>
+<h3>优化问题的应用</h3>
+<p>本地搜索算法特别适用于纯优化问题，例如集成电路设计、工厂布局、工作调度、自动编程、电信网络优化、车辆路径规划和投资组合管理等。这些问题的共同特点是路径并不重要，而目标是找到某种意义上的最佳状态。</p>
+<p>通过本地搜索算法，可以高效地处理大规模或连续的状态空间，尤其在实际应用中具有显著优势。例如，模拟退火算法在解决VLSI布局问题和工厂调度等大规模优化任务中表现优异；遗传算法在天线设计和计算机辅助设计等领域也有广泛应用   。</p>
+<hr>
+<p>以下是关于几种主要的本地搜索算法及其优化问题的详细比较表：</p>
+<table>
+<thead>
+<tr>
+<th><strong>算法</strong></th>
+<th><strong>基本思想</strong></th>
+<th><strong>优点</strong></th>
+<th><strong>缺点</strong></th>
+<th><strong>典型应用</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>爬山法</strong></td>
+<td>从初始状态开始，不断移动到邻近状态中目标函数值更高的状态</td>
+<td>1. 内存消耗低&lt;br&gt;2. 适用于大规模或无限状态空间</td>
+<td>1. 容易陷入局部最大值&lt;br&gt;2. 山脊效应&lt;br&gt;3. 高原效应</td>
+<td>图像处理、路径规划</td>
+</tr>
+<tr>
+<td><strong>模拟退火</strong></td>
+<td>模拟物理退火过程，通过逐渐降低温度来避免陷入局部最优</td>
+<td>1. 能够跳出局部最优&lt;br&gt;2. 理论上能达到全局最优</td>
+<td>1. 参数调整复杂&lt;br&gt;2. 收敛速度慢</td>
+<td>VLSI布局、工厂调度</td>
+</tr>
+<tr>
+<td><strong>局部光束搜索</strong></td>
+<td>保留多个状态，并行搜索状态的所有后继状态，选择最优的几个继续搜索</td>
+<td>1. 并行搜索提高效率&lt;br&gt;2. 信息共享提高搜索质量</td>
+<td>1. 内存消耗大&lt;br&gt;2. 可能仍陷入局部最优</td>
+<td>AI规划、机器学习</td>
+</tr>
+<tr>
+<td><strong>遗传算法</strong></td>
+<td>模拟自然选择，通过选择、交叉和变异生成新状态</td>
+<td>1. 强大的全局搜索能力&lt;br&gt;2. 能处理复杂搜索空间</td>
+<td>1. 参数选择困难&lt;br&gt;2. 收敛不确定性</td>
+<td>天线设计、自动编程、投资组合管理</td>
+</tr>
+<tr>
+<td><strong>禁忌搜索</strong></td>
+<td>通过记录一段时间内访问过的状态来避免循环搜索</td>
+<td>1. 能够跳出局部最优&lt;br&gt;2. 对参数设置不敏感</td>
+<td>1. 需要维护禁忌表，内存消耗大&lt;br&gt;2. 收敛速度慢</td>
+<td>生产调度、资源分配</td>
+</tr>
+<tr>
+<td><strong>粒子群优化</strong></td>
+<td>模拟生物群体行为，通过粒子间的相互协作找到最优解</td>
+<td>1. 简单易实现&lt;br&gt;2. 收敛速度快</td>
+<td>1. 容易陷入局部最优&lt;br&gt;2. 对参数敏感</td>
+<td>函数优化、神经网络训练</td>
+</tr>
+<tr>
+<td><strong>差分进化</strong></td>
+<td>通过变异操作和选择机制迭代改进解的质量</td>
+<td>1. 全局搜索能力强&lt;br&gt;2. 参数少且易调整</td>
+<td>1. 计算量大&lt;br&gt;2. 对初始参数敏感</td>
+<td>参数优化、函数优化</td>
+</tr>
+</tbody>
+</table>
+<h3>详细比较</h3>
+<ol>
+<li>
+<p><strong>爬山法（Hill Climbing）</strong></p>
+<ul>
+<li><strong>基本思想</strong>：从当前状态移动到其邻居状态中目标函数值更高的状态，直到达到局部最优。</li>
+<li><strong>优点</strong>：内存消耗低，适用于大规模或无限状态空间。</li>
+<li><strong>缺点</strong>：容易陷入局部最大值、山脊效应和高原效应。</li>
+<li><strong>典型应用</strong>：常用于图像处理和路径规划等领域。</li>
+</ul>
+</li>
+<li>
+<p><strong>模拟退火（Simulated Annealing）</strong></p>
+<ul>
+<li><strong>基本思想</strong>：通过允许一定概率的退步来避免陷入局部最优，并逐渐降低温度以接近全局最优。</li>
+<li><strong>优点</strong>：能跳出局部最优，理论上能达到全局最优。</li>
+<li><strong>缺点</strong>：参数调整复杂，收敛速度慢。</li>
+<li><strong>典型应用</strong>：广泛应用于VLSI布局和工厂调度等大规模优化任务。</li>
+</ul>
+</li>
+<li>
+<p><strong>局部光束搜索（Local Beam Search）</strong></p>
+<ul>
+<li><strong>基本思想</strong>：保留k个状态，并行搜索所有状态的所有后继状态，选择k个最佳状态继续搜索。</li>
+<li><strong>优点</strong>：并行搜索提高效率，信息共享提高搜索质量。</li>
+<li><strong>缺点</strong>：内存消耗大，可能仍会陷入局部最优。</li>
+<li><strong>典型应用</strong>：用于AI规划和机器学习等领域。</li>
+</ul>
+</li>
+<li>
+<p><strong>遗传算法（Genetic Algorithm）</strong></p>
+<ul>
+<li><strong>基本思想</strong>：模拟自然选择，通过选择、交叉和变异操作生成新的状态。</li>
+<li><strong>优点</strong>：全局搜索能力强，能处理复杂的搜索空间。</li>
+<li><strong>缺点</strong>：参数选择困难，收敛不确定性高。</li>
+<li><strong>典型应用</strong>：天线设计、自动编程和投资组合管理等领域。</li>
+</ul>
+</li>
+<li>
+<p><strong>禁忌搜索（Tabu Search）</strong></p>
+<ul>
+<li><strong>基本思想</strong>：通过记录一段时间内访问过的状态来避免搜索循环。</li>
+<li><strong>优点</strong>：能跳出局部最优，对参数设置不敏感。</li>
+<li><strong>缺点</strong>：需要维护禁忌表，内存消耗较大，收敛速度较慢。</li>
+<li><strong>典型应用</strong>：生产调度和资源分配等领域。</li>
+</ul>
+</li>
+<li>
+<p><strong>粒子群优化（Particle Swarm Optimization）</strong></p>
+<ul>
+<li><strong>基本思想</strong>：模拟生物群体行为，通过粒子间的相互协作找到最优解。</li>
+<li><strong>优点</strong>：简单易实现，收敛速度快。</li>
+<li><strong>缺点</strong>：容易陷入局部最优，对参数敏感。</li>
+<li><strong>典型应用</strong>：函数优化和神经网络训练等领域。</li>
+</ul>
+</li>
+<li>
+<p><strong>差分进化（Differential Evolution）</strong></p>
+<ul>
+<li><strong>基本思想</strong>：通过变异操作和选择机制迭代改进解的质量。</li>
+<li><strong>优点</strong>：全局搜索能力强，参数少且易调整。</li>
+<li><strong>缺点</strong>：计算量大，对初始参数敏感。</li>
+<li><strong>典型应用</strong>：参数优化和函数优化等领域。</li>
+</ul>
+</li>
+</ol>
+
+    <h3>Python 文件</h3>
+    <pre><code># 00_2.2.1_Local_Search_Algorithms_and_Optimization_Problems
+
+"""
+
+Lecture: 2_Problem-solving/2.2_Beyond_Classical_Search
+Content: 00_2.2.1_Local_Search_Algorithms_and_Optimization_Problems
+
+"""
+
+import numpy as np
+from typing import Callable, Tuple, Any
+
+class LocalSearchAlgorithm:
+    """
+    Base class for local search algorithms.
+    """
+    def __init__(self, initial_state: np.ndarray, objective_function: Callable[[np.ndarray], float]):
+        """
+        Initialize the local search algorithm.
+
+        Args:
+        - initial_state (np.ndarray): Initial state of the algorithm.
+        - objective_function (Callable[[np.ndarray], float]): Objective function to optimize.
+        """
+        self.current_state = initial_state
+        self.objective_function = objective_function
+
+    def optimize(self) -> Tuple[np.ndarray, float]:
+        """
+        Abstract method for optimizing the objective function.
+
+        Returns:
+        - Tuple[np.ndarray, float]: Optimized state and its corresponding objective function value.
+        """
+        raise NotImplementedError("Subclasses should implement the optimize method.")
+
+class HillClimbing(LocalSearchAlgorithm):
+    """
+    Hill Climbing algorithm for local search.
+    """
+    def optimize(self, max_iterations: int = 1000) -> Tuple[np.ndarray, float]:
+        """
+        Optimize the objective function using Hill Climbing.
+
+        Args:
+        - max_iterations (int): Maximum number of iterations to perform hill climbing.
+
+        Returns:
+        - Tuple[np.ndarray, float]: Optimized state and its corresponding objective function value.
+        """
+        for _ in range(max_iterations):
+            neighbor = self.current_state + np.random.normal(size=self.current_state.shape)
+            if self.objective_function(neighbor) > self.objective_function(self.current_state):
+                self.current_state = neighbor
+        best_value = self.objective_function(self.current_state)
+        return self.current_state, best_value
+
+class SimulatedAnnealing(LocalSearchAlgorithm):
+    """
+    Simulated Annealing algorithm for local search.
+    """
+    def optimize(self, max_iterations: int = 1000, initial_temperature: float = 1.0, cooling_rate: float = 0.95) -> Tuple[np.ndarray, float]:
+        """
+        Optimize the objective function using Simulated Annealing.
+
+        Args:
+        - max_iterations (int): Maximum number of iterations.
+        - initial_temperature (float): Initial temperature for Simulated Annealing.
+        - cooling_rate (float): Rate at which temperature decreases.
+
+        Returns:
+        - Tuple[np.ndarray, float]: Optimized state and its corresponding objective function value.
+        """
+        temperature = initial_temperature
+        for _ in range(max_iterations):
+            neighbor = self.current_state + np.random.normal(size=self.current_state.shape)
+            delta_e = self.objective_function(neighbor) - self.objective_function(self.current_state)
+            if delta_e > 0 or np.random.rand() < np.exp(delta_e / temperature):
+                self.current_state = neighbor
+            temperature *= cooling_rate
+        best_value = self.objective_function(self.current_state)
+        return self.current_state, best_value
+
+class GeneticAlgorithm:
+    """
+    Genetic Algorithm for optimization.
+    """
+    def __init__(self, population_size: int, chromosome_length: int, fitness_function: Callable[[np.ndarray], float]):
+        """
+        Initialize the genetic algorithm.
+
+        Args:
+        - population_size (int): Size of the population.
+        - chromosome_length (int): Length of each chromosome.
+        - fitness_function (Callable[[np.ndarray], float]): Fitness function to evaluate chromosomes.
+        """
+        self.population_size = population_size
+        self.chromosome_length = chromosome_length
+        self.fitness_function = fitness_function
+        self.population = np.random.rand(population_size, chromosome_length)
+
+    def evolve(self, generations: int = 100) -> Tuple[np.ndarray, float]:
+        """
+        Evolve the population using genetic algorithm.
+
+        Args:
+        - generations (int): Number of generations to evolve.
+
+        Returns:
+        - Tuple[np.ndarray, float]: Optimized state and its corresponding objective function value.
+        """
+        for _ in range(generations):
+            # Evaluate fitness of each individual
+            fitness_values = np.array([self.fitness_function(chromosome) for chromosome in self.population])
+
+            # Select parents based on fitness
+            parents = self.population[np.argsort(fitness_values)[-2:]]
+
+            # Crossover and mutation
+            offspring = np.array([self.crossover(parents) for _ in range(self.population_size)])
+            self.population = offspring
+
+        # Find the best individual
+        best_index = np.argmax([self.fitness_function(chromosome) for chromosome in self.population])
+        best_individual = self.population[best_index]
+        best_value = self.fitness_function(best_individual)
+
+        return best_individual, best_value
+
+    def crossover(self, parents: np.ndarray) -> np.ndarray:
+        """
+        Perform crossover between two parent chromosomes.
+
+        Args:
+        - parents (np.ndarray): Two parent chromosomes.
+
+        Returns:
+        - np.ndarray: Offspring chromosome.
+        """
+        crossover_point = np.random.randint(self.chromosome_length)
+        offspring = np.concatenate((parents[0][:crossover_point], parents[1][crossover_point:]))
+        return offspring
+
+# Example usage:
+if __name__ == "__main__":
+    # Define an example objective function (minimize a quadratic function)
+    def objective_function(x: np.ndarray) -> float:
+        return np.sum(x**2)
+
+    # Initial state for algorithms
+    initial_state = np.random.rand(5)
+
+    # Hill Climbing optimization
+    hill_climbing = HillClimbing(initial_state, objective_function)
+    optimized_state, best_value = hill_climbing.optimize()
+    print(f"Hill Climbing: Optimized state = {optimized_state}, Best value = {best_value}")
+
+    # Simulated Annealing optimization
+    simulated_annealing = SimulatedAnnealing(initial_state, objective_function)
+    optimized_state, best_value = simulated_annealing.optimize()
+    print(f"Simulated Annealing: Optimized state = {optimized_state}, Best value = {best_value}")
+
+    # Genetic Algorithm optimization
+    genetic_algorithm = GeneticAlgorithm(population_size=10, chromosome_length=5, fitness_function=objective_function)
+    optimized_state, best_value = genetic_algorithm.evolve()
+    print(f"Genetic Algorithm: Optimized state = {optimized_state}, Best value = {best_value}")
+</code></pre>
+  </div>
+</body>
+</html>
+  

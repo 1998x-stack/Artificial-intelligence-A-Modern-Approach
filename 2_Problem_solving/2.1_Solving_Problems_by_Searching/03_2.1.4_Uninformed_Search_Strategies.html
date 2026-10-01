@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <title>2.1.4 Uninformed Search Strategies</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
+  <link rel="stylesheet" href="../../markdown.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="../../markdown.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>03_2.1.4_Uninformed_Search_Strategies</h1>
+<pre><code>
+Lecture: 2_Problem-solving/2.1_Solving_Problems_by_Searching
+Content: 03_2.1.4_Uninformed_Search_Strategies
+
+</code></pre>
+<h3>2.1.4 无信息搜索策略</h3>
+<h4>1. 引言</h4>
+<p>无信息搜索策略（Uninformed Search Strategies）也被称为盲目搜索（Blind Search），是指在没有额外信息或启发的情况下，系统地探索所有可能的解决方案空间。无信息搜索方法不依赖于任何有关目标位置或状态的信息，只使用问题本身的结构来进行搜索。这些方法在解决问题时一般不具备启发性信息，因此效率可能较低，但在一些情况下仍然非常有效。常见的无信息搜索方法包括宽度优先搜索（BFS）、深度优先搜索（DFS）、迭代加深搜索（IDS）等。</p>
+<h4>2. 宽度优先搜索（BFS）</h4>
+<h5>2.1 基本原理</h5>
+<p>宽度优先搜索（BFS）是一种逐层搜索算法，从起始节点开始，逐层向外扩展，直到找到目标节点或搜索完所有节点。BFS 使用队列数据结构来实现节点的广度优先扩展。</p>
+<h5>2.2 算法步骤</h5>
+<ol>
+<li>初始化：将起始节点放入队列，并标记为已访问。</li>
+<li>迭代：从队列中取出一个节点，检查是否为目标节点。如果是，则结束搜索并返回结果；否则，将该节点的所有未访问的邻居节点加入队列，并标记为已访问。</li>
+<li>重复迭代步骤，直到找到目标节点或队列为空。</li>
+</ol>
+<h5>2.3 优缺点</h5>
+<ul>
+<li><strong>优点</strong>：BFS 能够保证找到最短路径（对于无权图）。适用于搜索路径长度最小的问题。</li>
+<li><strong>缺点</strong>：需要大量的内存来存储所有节点，空间复杂度较高。</li>
+</ul>
+<h5>2.4 应用场景</h5>
+<ul>
+<li>迷宫求解</li>
+<li>最短路径问题</li>
+<li>广度遍历</li>
+</ul>
+<h4>3. 深度优先搜索（DFS）</h4>
+<h5>3.1 基本原理</h5>
+<p>深度优先搜索（DFS）是一种深入搜索算法，从起始节点开始，沿着每个分支尽可能深入，直到到达叶节点，然后回溯并探索下一条路径。DFS 使用栈数据结构来实现节点的深度优先扩展。</p>
+<h5>3.2 算法步骤</h5>
+<ol>
+<li>初始化：将起始节点放入栈，并标记为已访问。</li>
+<li>迭代：从栈中取出一个节点，检查是否为目标节点。如果是，则结束搜索并返回结果；否则，将该节点的所有未访问的邻居节点加入栈，并标记为已访问。</li>
+<li>重复迭代步骤，直到找到目标节点或栈为空。</li>
+</ol>
+<h5>3.3 优缺点</h5>
+<ul>
+<li><strong>优点</strong>：DFS 的内存需求较小，只需存储当前路径上的节点。</li>
+<li><strong>缺点</strong>：不能保证找到最短路径，可能陷入无限循环（如果存在环）。</li>
+</ul>
+<h5>3.4 应用场景</h5>
+<ul>
+<li>图的连通性检测</li>
+<li>拓扑排序</li>
+<li>寻找路径或解决谜题</li>
+</ul>
+<h4>4. 迭代加深搜索（IDS）</h4>
+<h5>4.1 基本原理</h5>
+<p>迭代加深搜索（IDS）结合了 DFS 和 BFS 的优点，通过逐步加深搜索深度来实现节点的探索。IDS 每次增加搜索深度限制，重复执行 DFS，直到找到目标节点或达到最大深度。</p>
+<h5>4.2 算法步骤</h5>
+<ol>
+<li>设置初始深度限制为 0。</li>
+<li>迭代：在当前深度限制下执行 DFS。</li>
+<li>如果找到目标节点，则结束搜索并返回结果；否则，增加深度限制并重复步骤 2。</li>
+</ol>
+<h5>4.3 优缺点</h5>
+<ul>
+<li><strong>优点</strong>：结合了 DFS 的低内存需求和 BFS 的完整性，能够保证找到最短路径。</li>
+<li><strong>缺点</strong>：每次迭代都需要从起始节点重新开始，存在重复计算。</li>
+</ul>
+<h5>4.4 应用场景</h5>
+<ul>
+<li>状态空间较大且解较深的问题</li>
+<li>需要找到最优解的搜索问题</li>
+</ul>
+<h4>5. 双向搜索</h4>
+<h5>5.1 基本原理</h5>
+<p>双向搜索同时从起始节点和目标节点进行搜索，直到两个搜索路径在中间相遇。双向搜索能够显著减少搜索空间，提高搜索效率。</p>
+<h5>5.2 算法步骤</h5>
+<ol>
+<li>初始化：分别从起始节点和目标节点开始进行 BFS。</li>
+<li>迭代：交替执行两个 BFS，扩展当前层的节点。</li>
+<li>检查两个搜索路径是否相遇，如果相遇，则结束搜索并返回结果；否则，继续迭代。</li>
+</ol>
+<h5>5.3 优缺点</h5>
+<ul>
+<li><strong>优点</strong>：将搜索空间减小为原来的平方根，显著提高搜索效率。</li>
+<li><strong>缺点</strong>：需要知道目标节点的位置，复杂度较高。</li>
+</ul>
+<h5>5.4 应用场景</h5>
+<ul>
+<li>路径规划</li>
+<li>目标已知的搜索问题</li>
+</ul>
+<h4>6. 总结</h4>
+<p>无信息搜索策略是解决复杂问题的重要工具。尽管这些方法没有启发信息，但在许多情况下仍然非常有效。通过选择合适的搜索策略，我们可以在不同的问题场景中找到最优解或满意的解决方案。对于小规模或需要完整遍历的问题，无信息搜索策略是一个重要且有效的工具。</p>
+<hr>
+<p>To provide an extreme detailed comparison table of uninformed search strategies, let's organize their characteristics, advantages, disadvantages, and applications.</p>
+<table>
+<thead>
+<tr>
+<th>搜索策略</th>
+<th>原理和描述</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>宽度优先搜索 (BFS)</td>
+<td>从起始节点开始逐层扩展，直到找到目标节点或搜索完所有节点。使用队列进行节点扩展。</td>
+<td>找到的路径是最短的（对于无权图）。</td>
+<td>需要大量内存存储所有节点。</td>
+<td>最短路径问题，连通性检测，广度优先遍历。</td>
+</tr>
+<tr>
+<td>深度优先搜索 (DFS)</td>
+<td>从起始节点开始，沿着每个分支尽可能深入，直到达到叶节点，然后回溯并探索下一条路径。使用栈进行节点扩展。</td>
+<td>内存需求较小，只需存储当前路径上的节点。</td>
+<td>不能保证找到最短路径，可能陷入无限循环（如果存在环）。</td>
+<td>图的连通性检测，拓扑排序，寻找路径或解决谜题。</td>
+</tr>
+<tr>
+<td>迭代加深搜索 (IDS)</td>
+<td>结合了DFS和BFS的优点，逐步增加搜索深度限制。每次迭代使用DFS，在达到当前深度限制后增加深度重新开始。</td>
+<td>结合了DFS的低内存需求和BFS的完整性，能够保证找到最短路径。</td>
+<td>每次迭代都需要重新开始搜索，存在重复计算。</td>
+<td>状态空间较大且解较深的问题，需要找到最优解的搜索问题。</td>
+</tr>
+<tr>
+<td>双向搜索 (Bidirectional Search)</td>
+<td>同时从起始节点和目标节点开始搜索，直到两个搜索路径在中间相遇。交替执行两个方向的BFS，显著减少搜索空间。</td>
+<td>将搜索空间减小为原来的平方根，提高搜索效率。</td>
+<td>需要知道目标节点的位置，复杂度较高。</td>
+<td>路径规划，目标已知的搜索问题。</td>
+</tr>
+</tbody>
+</table>
+<h3>分析和总结：</h3>
+<ol>
+<li>
+<p><strong>宽度优先搜索 (BFS)</strong>：</p>
+<ul>
+<li><strong>优点</strong>：能够找到最短路径（对于无权图）。</li>
+<li><strong>缺点</strong>：内存需求高，适合问题规模不大的场景。</li>
+</ul>
+</li>
+<li>
+<p><strong>深度优先搜索 (DFS)</strong>：</p>
+<ul>
+<li><strong>优点</strong>：内存需求低，适合解决状态空间较大的问题。</li>
+<li><strong>缺点</strong>：不能保证找到最短路径，可能陷入无限循环。</li>
+</ul>
+</li>
+<li>
+<p><strong>迭代加深搜索 (IDS)</strong>：</p>
+<ul>
+<li><strong>优点</strong>：结合了DFS和BFS的优点，能够保证找到最短路径，减少内存需求。</li>
+<li><strong>缺点</strong>：每次迭代需要重新搜索，可能存在重复计算。</li>
+</ul>
+</li>
+<li>
+<p><strong>双向搜索 (Bidirectional Search)</strong>：</p>
+<ul>
+<li><strong>优点</strong>：显著减少搜索空间，提高搜索效率。</li>
+<li><strong>缺点</strong>：需要知道目标节点的位置，实现复杂度较高。</li>
+</ul>
+</li>
+</ol>
+<p>这些搜索策略在不同的问题场景中具有各自的优势和局限性，选择合适的策略取决于问题的特性，如问题规模、解空间复杂度以及是否需要最短路径等因素。</p>
+
+    <h3>Python 文件</h3>
+    <pre><code># 03_2.1.4_Uninformed_Search_Strategies
+
+"""
+
+Lecture: 2_Problem-solving/2.1_Solving_Problems_by_Searching
+Content: 03_2.1.4_Uninformed_Search_Strategies
+
+"""
+
+</code></pre>
+  </div>
+</body>
+</html>
+  

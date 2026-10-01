@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <title>2.2.2 Local Search in Continuous Spaces</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
+  <link rel="stylesheet" href="../../markdown.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="../../markdown.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>01_2.2.2_Local_Search_in_Continuous_Spaces</h1>
+<pre><code>
+Lecture: 2_Problem-solving/2.2_Beyond_Classical_Search
+Content: 01_2.2.2_Local_Search_in_Continuous_Spaces
+
+</code></pre>
+<h3>本地搜索算法在连续空间中的应用</h3>
+<p>在第4章中，我们探讨了超越经典搜索的方法，特别是本地搜索算法在连续空间中的应用。本节内容详细介绍了这些算法，包括梯度上升、模拟退火、牛顿-拉夫森法等。</p>
+<h4>梯度上升法</h4>
+<p>梯度上升法（Steepest-Ascent Hill Climbing）是本地搜索算法中最基础的一种。其基本思想是通过沿着目标函数梯度的方向不断更新当前状态，从而找到函数的局部最大值。</p>
+<p><strong>公式：</strong>
+$$ x \leftarrow x + \alpha \nabla f(x) $$
+其中，$ \alpha $ 是一个小常数，表示步长。</p>
+<p><strong>调整步长 $ \alpha $ 的方法：</strong></p>
+<ul>
+<li><strong>步长太小</strong>：需要太多步骤才能达到最优。</li>
+<li><strong>步长太大</strong>：可能会越过最优点。</li>
+</ul>
+<p>为了克服这个问题，通常使用线搜索（Line Search）技术。线搜索通过不断增加 $ \alpha $ 的值直到目标函数开始减小，此时的 $ \alpha $ 值即为最优步长。</p>
+<h4>模拟退火</h4>
+<p>模拟退火（Simulated Annealing）是一种基于统计物理的随机优化算法，通过模拟物理退火过程来避免陷入局部最优。</p>
+<p><strong>模拟退火算法步骤：</strong></p>
+<ol>
+<li>初始化温度 $ T $。</li>
+<li>从当前状态出发，随机选择一个邻近状态。</li>
+<li>计算能量变化 $ \Delta E $。</li>
+<li>如果 $ \Delta E &gt; 0 $，接受新状态；否则，以概率 $ \exp(\Delta E / T) $ 接受新状态。</li>
+<li>降低温度 $ T $ 并重复上述步骤，直到系统达到平衡或温度降到零。</li>
+</ol>
+<p>模拟退火的优势在于它能够有效地跳出局部最优，通过逐渐降低温度来探索更广阔的解空间。</p>
+<h4>牛顿-拉夫森法</h4>
+<p>牛顿-拉夫森法（Newton-Raphson Method）是一种基于导数的优化算法，通过迭代求解方程的根来找到目标函数的最优值。</p>
+<p><strong>牛顿-拉夫森更新公式：</strong>
+$$ x \leftarrow x - \frac{g(x)}{g'(x)} $$
+其中，$ g(x) $ 是目标函数的导数。</p>
+<p>在优化问题中，我们需要找到目标函数的梯度为零的点，即：
+$$ \nabla f(x) = 0 $$
+更新公式可以写成矩阵形式：
+$$ x \leftarrow x - H_f(x)^{-1} \nabla f(x) $$
+其中，$ H_f(x) $ 是目标函数的Hessian矩阵，其元素为二阶导数。</p>
+<p>牛顿-拉夫森法通过利用梯度和Hessian矩阵的信息，可以快速收敛到目标函数的局部最优。然而，对于高维问题，计算Hessian矩阵的代价较高，因此常常使用近似方法。</p>
+<h4>连续空间中的优化问题</h4>
+<p>在连续空间中，本地搜索算法同样面临局部最优、山脊和高原问题。随机重启和模拟退火是常用的克服这些问题的方法。连续高维空间中搜索变得更加困难，因为空间大且容易迷失方向。</p>
+<p><strong>约束优化：</strong>
+约束优化问题是指解必须满足某些硬性约束条件，例如机场选址问题中，机场必须位于某个区域内。这类问题的难度取决于约束条件和目标函数的性质。</p>
+<p><strong>线性规划：</strong>
+线性规划问题是最常见的约束优化问题之一，其约束必须是线性不等式，目标函数也是线性的。线性规划问题的时间复杂度是多项式级别的，是目前研究最广泛、应用最广的优化问题类型之一。</p>
+<p>综上所述，本地搜索算法在连续空间中的应用非常广泛，从梯度上升、模拟退火到牛顿-拉夫森法，每种算法都有其独特的优势和适用场景。在实际应用中，需要根据具体问题选择合适的算法，以达到最优的解决方案 。</p>
+
+    <h3>Python 文件</h3>
+    <pre><code># 01_2.2.2_Local_Search_in_Continuous_Spaces
+
+"""
+
+Lecture: 2_Problem-solving/2.2_Beyond_Classical_Search
+Content: 01_2.2.2_Local_Search_in_Continuous_Spaces
+
+"""
+
+import numpy as np
+from typing import Callable, Tuple, Any
+
+class LocalSearchContinuous:
+    """
+    连续空间本地搜索算法的基类。
+    """
+    def __init__(self, initial_state: np.ndarray, objective_function: Callable[[np.ndarray], float]):
+        """
+        初始化本地搜索算法。
+
+        参数:
+        - initial_state (np.ndarray): 算法的初始状态。
+        - objective_function (Callable[[np.ndarray], float]): 目标函数。
+        """
+        self.current_state = initial_state
+        self.objective_function = objective_function
+
+    def optimize(self) -> Tuple[np.ndarray, float]:
+        """
+        优化目标函数的抽象方法。
+
+        返回:
+        - Tuple[np.ndarray, float]: 优化后的状态及其对应的目标函数值。
+        """
+        raise NotImplementedError("子类应该实现 optimize 方法。")
+
+
+class GradientAscent(LocalSearchContinuous):
+    """
+    梯度上升算法。
+    """
+    def optimize(self, learning_rate: float = 0.01, max_iterations: int = 1000) -> Tuple[np.ndarray, float]:
+        """
+        使用梯度上升算法优化目标函数。
+
+        参数:
+        - learning_rate (float): 学习率，控制每步更新幅度。
+        - max_iterations (int): 最大迭代次数。
+
+        返回:
+        - Tuple[np.ndarray, float]: 优化后的状态及其对应的目标函数值。
+        """
+        for _ in range(max_iterations):
+            gradient = self._compute_gradient(self.current_state)
+            self.current_state += learning_rate * gradient
+        best_value = self.objective_function(self.current_state)
+        return self.current_state, best_value
+
+    def _compute_gradient(self, state: np.ndarray) -> np.ndarray:
+        """
+        计算给定状态的梯度。
+
+        参数:
+        - state (np.ndarray): 当前状态。
+
+        返回:
+        - np.ndarray: 计算出的梯度。
+        """
+        epsilon = 1e-8
+        gradient = np.zeros_like(state)
+        for i in range(len(state)):
+            state_epsilon = np.array(state, copy=True)
+            state_epsilon[i] += epsilon
+            gradient[i] = (self.objective_function(state_epsilon) - self.objective_function(state)) / epsilon
+        return gradient
+
+
+class SimulatedAnnealing(LocalSearchContinuous):
+    """
+    模拟退火算法。
+    """
+    def optimize(self, initial_temperature: float = 1.0, cooling_rate: float = 0.95, max_iterations: int = 1000) -> Tuple[np.ndarray, float]:
+        """
+        使用模拟退火算法优化目标函数。
+
+        参数:
+        - initial_temperature (float): 初始温度。
+        - cooling_rate (float): 降温速率。
+        - max_iterations (int): 最大迭代次数。
+
+        返回:
+        - Tuple[np.ndarray, float]: 优化后的状态及其对应的目标函数值。
+        """
+        temperature = initial_temperature
+        for _ in range(max_iterations):
+            neighbor = self.current_state + np.random.normal(size=self.current_state.shape)
+            delta_e = self.objective_function(neighbor) - self.objective_function(self.current_state)
+            if delta_e > 0 or np.random.rand() < np.exp(delta_e / temperature):
+                self.current_state = neighbor
+            temperature *= cooling_rate
+        best_value = self.objective_function(self.current_state)
+        return self.current_state, best_value
+
+
+class NewtonRaphson(LocalSearchContinuous):
+    """
+    牛顿-拉夫森法。
+    """
+    def optimize(self, max_iterations: int = 1000) -> Tuple[np.ndarray, float]:
+        """
+        使用牛顿-拉夫森法优化目标函数。
+
+        参数:
+        - max_iterations (int): 最大迭代次数。
+
+        返回:
+        - Tuple[np.ndarray, float]: 优化后的状态及其对应的目标函数值。
+        """
+        for _ in range(max_iterations):
+            gradient = self._compute_gradient(self.current_state)
+            hessian = self._compute_hessian(self.current_state)
+            if np.linalg.det(hessian) == 0:
+                print("Hessian matrix is singular.")
+                break
+            self.current_state -= np.linalg.inv(hessian).dot(gradient)
+        best_value = self.objective_function(self.current_state)
+        return self.current_state, best_value
+
+    def _compute_gradient(self, state: np.ndarray) -> np.ndarray:
+        """
+        计算给定状态的梯度。
+
+        参数:
+        - state (np.ndarray): 当前状态。
+
+        返回:
+        - np.ndarray: 计算出的梯度。
+        """
+        epsilon = 1e-8
+        gradient = np.zeros_like(state)
+        for i in range(len(state)):
+            state_epsilon = np.array(state, copy=True)
+            state_epsilon[i] += epsilon
+            gradient[i] = (self.objective_function(state_epsilon) - self.objective_function(state)) / epsilon
+        return gradient
+
+    def _compute_hessian(self, state: np.ndarray) -> np.ndarray:
+        """
+        计算给定状态的Hessian矩阵。
+
+        参数:
+        - state (np.ndarray): 当前状态。
+
+        返回:
+        - np.ndarray: 计算出的Hessian矩阵。
+        """
+        epsilon = 1e-5
+        hessian = np.zeros((len(state), len(state)))
+        for i in range(len(state)):
+            for j in range(len(state)):
+                state_epsilon_i = np.array(state, copy=True)
+                state_epsilon_j = np.array(state, copy=True)
+                state_epsilon_ij = np.array(state, copy=True)
+
+                state_epsilon_i[i] += epsilon
+                state_epsilon_j[j] += epsilon
+                state_epsilon_ij[i] += epsilon
+                state_epsilon_ij[j] += epsilon
+
+                f_x = self.objective_function(state)
+                f_x_i = self.objective_function(state_epsilon_i)
+                f_x_j = self.objective_function(state_epsilon_j)
+                f_x_ij = self.objective_function(state_epsilon_ij)
+
+                hessian[i, j] = (f_x_ij - f_x_i - f_x_j + f_x) / (epsilon ** 2)
+        return hessian
+
+# 示例用法：
+if __name__ == "__main__":
+    # 定义一个示例目标函数（最小化一个二次函数）
+    def objective_function(x: np.ndarray) -> float:
+        return np.sum(x**2)
+
+    # 算法的初始状态
+    initial_state = np.random.rand(5)
+
+    # 梯度上升优化
+    gradient_ascent = GradientAscent(initial_state, objective_function)
+    optimized_state, best_value = gradient_ascent.optimize()
+    print(f"梯度上升: 优化状态 = {optimized_state}, 最优值 = {best_value}")
+
+    # 模拟退火优化
+    simulated_annealing = SimulatedAnnealing(initial_state, objective_function)
+    optimized_state, best_value = simulated_annealing.optimize()
+    print(f"模拟退火: 优化状态 = {optimized_state}, 最优值 = {best_value}")
+
+    # 牛顿-拉夫森法优化
+    newton_raphson = NewtonRaphson(initial_state, objective_function)
+    optimized_state, best_value = newton_raphson.optimize()
+    print(f"牛顿-拉夫森法: 优化状态 = {optimized_state}, 最优值 = {best_value}")
+</code></pre>
+  </div>
+</body>
+</html>
+  

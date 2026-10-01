@@ -1,0 +1,274 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <title>2.3.2 Optimal Decisions in Games</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap">
+  <link rel="stylesheet" href="../../markdown.css">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="../../markdown.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>01_2.3.2_Optimal_Decisions_in_Games</h1>
+<pre><code>
+Lecture: 2_Problem-solving/2.3_Adversarial_Search
+Content: 01_2.3.2_Optimal_Decisions_in_Games
+
+</code></pre>
+<h3>2.3.2 博弈中的最优决策</h3>
+<p>在这一节中，我们深入探讨了博弈中的最优决策问题，这是博弈论研究的核心内容之一。最优决策旨在帮助玩家在对抗性环境中作出最佳选择，以最大化他们的收益或最小化潜在损失。以下是对这一章的详细分析：</p>
+<h4>1. 引言</h4>
+<p>博弈中的最优决策主要关注如何在对手可能采取各种策略的情况下，选择自己的最佳策略。这个问题在对抗性博弈（如棋类游戏）中尤为重要，因为每个玩家的成功不仅取决于自己的策略，还取决于对手的反应。</p>
+<h4>2. 最小最大算法（Minimax Algorithm）</h4>
+<p>最小最大算法是解决零和博弈中最优决策问题的基本方法。零和博弈是一种特殊的博弈形式，其中一个玩家的收益等于另一个玩家的损失。最小最大算法通过递归地评估博弈树中的各个节点来确定最佳策略。算法的基本思想是：</p>
+<ul>
+<li>每个玩家都试图最大化自己的最小收益（即在对手采取最优策略的情况下，保证自己的收益最小化）。</li>
+<li>在每个节点，当前玩家选择使其收益最大的动作，而假设对手在其回合中会选择使其收益最小的动作。</li>
+</ul>
+<p><strong>算法步骤：</strong></p>
+<ol>
+<li><strong>生成博弈树</strong>：从当前状态出发，生成所有可能的后继状态，直至达到终局状态（叶节点）。</li>
+<li><strong>评估叶节点</strong>：根据终局状态的结果，为每个叶节点分配一个效用值。</li>
+<li><strong>递归回溯</strong>：从叶节点开始，向上递归回溯，当前玩家在每个节点选择使其收益最大的动作（即最大化其最小收益）。</li>
+</ol>
+<h4>3. Alpha-Beta 剪枝</h4>
+<p>Alpha-Beta 剪枝是一种优化最小最大算法的方法，通过剪除不必要的分支来减少搜索空间，提高算法效率。Alpha-Beta 剪枝利用了两个变量 α 和 β 来记录当前发现的最优值范围：</p>
+<ul>
+<li><strong>α（Alpha）</strong>：当前节点的最大值下界。</li>
+<li><strong>β（Beta）</strong>：当前节点的最小值上界。</li>
+</ul>
+<p><strong>剪枝规则：</strong></p>
+<ul>
+<li>在最大节点，如果发现某个子节点的值大于或等于 β，则可以剪除其他子节点，因为对手不会允许该节点的值超过 β。</li>
+<li>在最小节点，如果发现某个子节点的值小于或等于 α，则可以剪除其他子节点，因为当前玩家不会选择使其收益小于 α 的动作。</li>
+</ul>
+<h4>4. 不完全信息博弈中的最优决策</h4>
+<p>在不完全信息博弈中，玩家无法完全观测对手的状态或动作，这增加了决策的复杂性。最优决策需要考虑概率和期望收益。常用的方法包括：</p>
+<ul>
+<li><strong>蒙特卡罗树搜索（Monte Carlo Tree Search, MCTS）</strong>：通过模拟游戏的多次随机对局，统计不同动作的平均收益，选择期望收益最大的动作。</li>
+<li><strong>贝叶斯博弈（Bayesian Games）</strong>：利用贝叶斯推断，根据观察到的信息更新对手策略的概率分布，并基于此概率分布进行决策。</li>
+</ul>
+<h4>5. 强化学习与最优决策</h4>
+<p>近年来，强化学习在博弈中的应用取得了显著成果。通过与环境的持续互动，智能体可以学习到在不同情境下的最优策略。常用的强化学习方法包括：</p>
+<ul>
+<li><strong>Q-Learning</strong>：通过更新状态-动作值函数，智能体学习到在每个状态下采取哪种动作可以获得最大的长期收益。</li>
+<li><strong>深度强化学习（Deep Reinforcement Learning）</strong>：结合神经网络和强化学习技术，智能体可以在复杂的高维状态空间中进行决策。</li>
+</ul>
+<h4>6. 应用领域</h4>
+<p>最优决策理论不仅在经典的棋类游戏中有广泛应用，还在许多实际领域中发挥着重要作用：</p>
+<ul>
+<li><strong>经济学与市场分析</strong>：优化定价策略、市场竞争策略等。</li>
+<li><strong>网络安全</strong>：在防御策略中优化资源分配，抵御潜在攻击。</li>
+<li><strong>机器人控制</strong>：优化路径规划和任务分配，提高机器人系统的效率和鲁棒性。</li>
+</ul>
+<h3>总结</h3>
+<p>博弈中的最优决策是一个复杂而又重要的研究领域。通过最小最大算法、Alpha-Beta 剪枝以及强化学习等技术，研究者能够开发出强大的算法来应对各种对抗性环境中的决策问题。这些方法在实际应用中具有广泛的前景，能够为多种领域提供优化解决方案。</p>
+
+    <h3>Python 文件</h3>
+    <pre><code># 01_2.3.2_Optimal_Decisions_in_Games
+
+"""
+
+Lecture: 2_Problem-solving/2.3_Adversarial_Search
+Content: 01_2.3.2_Optimal_Decisions_in_Games
+
+"""
+
+import numpy as np
+from typing import Tuple
+
+class Minimax:
+    def __init__(self, evaluation_function):
+        """
+        Initialize the Minimax algorithm with an evaluation function.
+
+        Parameters:
+        - evaluation_function: Function to evaluate the utility of a game state.
+        """
+        self.eval_func = evaluation_function
+
+    def minimax_decision(self, state: np.ndarray) -> Tuple[int, float]:
+        """
+        Perform Minimax decision to find the optimal action and its utility.
+
+        Parameters:
+        - state: Current game state represented as a numpy array.
+
+        Returns:
+        - Tuple containing optimal action (index) and its utility (float).
+        """
+        # Ensure the state is represented correctly (example)
+        # Here, `state` is assumed to be a numpy array or matrix representing the game state.
+
+        # Determine all possible actions (example)
+        actions = self.get_possible_actions(state)
+
+        best_utility = -np.inf
+        best_action = None
+
+        # For each action, compute the utility using Minimax
+        for action in actions:
+            # Apply action to the state (hypothetically)
+            new_state = self.apply_action(state, action)
+            
+            # Compute utility using Minimax
+            utility = self.min_value(new_state)
+
+            # Update best action if this action provides a higher utility
+            if utility > best_utility:
+                best_utility = utility
+                best_action = action
+
+        return best_action, best_utility
+
+    def min_value(self, state: np.ndarray) -> float:
+        """
+        Minimize the utility value for the opponent's turn.
+
+        Parameters:
+        - state: Current game state represented as a numpy array.
+
+        Returns:
+        - Minimum utility value achievable for the opponent.
+        """
+        # Check if the game is over or evaluate the state if terminal
+        if self.is_terminal(state):
+            return self.eval_func(state)
+
+        min_utility = np.inf
+
+        # Determine all possible actions (example)
+        actions = self.get_possible_actions(state)
+
+        # For each action, compute the utility using Minimax
+        for action in actions:
+            # Apply action to the state (hypothetically)
+            new_state = self.apply_action(state, action)
+            
+            # Compute utility using Max-value function
+            utility = self.max_value(new_state)
+
+            # Update minimum utility if this action provides a lower utility
+            if utility < min_utility:
+                min_utility = utility
+
+        return min_utility
+
+    def max_value(self, state: np.ndarray) -> float:
+        """
+        Maximize the utility value for the player's turn.
+
+        Parameters:
+        - state: Current game state represented as a numpy array.
+
+        Returns:
+        - Maximum utility value achievable for the player.
+        """
+        # Check if the game is over or evaluate the state if terminal
+        if self.is_terminal(state):
+            return self.eval_func(state)
+
+        max_utility = -np.inf
+
+        # Determine all possible actions (example)
+        actions = self.get_possible_actions(state)
+
+        # For each action, compute the utility using Minimax
+        for action in actions:
+            # Apply action to the state (hypothetically)
+            new_state = self.apply_action(state, action)
+            
+            # Compute utility using Min-value function
+            utility = self.min_value(new_state)
+
+            # Update maximum utility if this action provides a higher utility
+            if utility > max_utility:
+                max_utility = utility
+
+        return max_utility
+
+    def apply_action(self, state: np.ndarray, action) -> np.ndarray:
+        """
+        Apply the action to the current state and return the new state.
+
+        Parameters:
+        - state: Current game state represented as a numpy array.
+        - action: Action to be applied to the state.
+
+        Returns:
+        - New game state after applying the action.
+        """
+        # Example implementation: Apply action to the state
+        new_state = state.copy()
+        new_state[action] = 1  # Example action application
+        
+        return new_state
+
+    def is_terminal(self, state: np.ndarray) -> bool:
+        """
+        Check if the current state is a terminal state (end of game).
+
+        Parameters:
+        - state: Current game state represented as a numpy array.
+
+        Returns:
+        - True if the state is terminal, False otherwise.
+        """
+        # Example implementation: Check if the state is terminal
+        # Example condition: game is over when no more actions are possible
+        return len(self.get_possible_actions(state)) == 0
+
+    def get_possible_actions(self, state: np.ndarray):
+        """
+        Get all possible actions that can be taken from the current state.
+
+        Parameters:
+        - state: Current game state represented as a numpy array.
+
+        Returns:
+        - List of possible actions.
+        """
+        # Example implementation: Get possible actions (e.g., indices of empty cells)
+        return np.where(state == 0)[0]
+
+    def evaluation_function(self, state: np.ndarray) -> float:
+        """
+        Evaluate the utility of the current game state.
+
+        Parameters:
+        - state: Current game state represented as a numpy array.
+
+        Returns:
+        - Utility value indicating the goodness of the state for the current player.
+        """
+        # Example implementation: Simple evaluation function (e.g., count number of filled rows/columns)
+        # Replace with a more sophisticated evaluation function depending on the game
+        return np.sum(state)  # Example: Count number of filled cells (assuming 1 represents filled)
+
+# Example usage:
+if __name__ == "__main__":
+    # Initialize Minimax with an evaluation function (example)
+    minimax = Minimax(evaluation_function=minimax.evaluation_function)
+
+    # Example game state (numpy array)
+    game_state = np.array([
+        [1, 0, 0],
+        [0, -1, 0],
+        [0, 0, 0]
+    ])
+
+    # Perform Minimax decision
+    best_action, best_utility = minimax.minimax_decision(game_state)
+    print(f"Best Action: {best_action}, Best Utility: {best_utility}")
+</code></pre>
+  </div>
+</body>
+</html>
+  
